@@ -4,7 +4,7 @@ tamanoZ = 1
 iluminacion = false
 numPira = 0
 piraXY = 10
-piraZ = 10
+
 numCasa = 0
 casaXY = 5
 casaZ = 5
@@ -39,12 +39,12 @@ fn createSurface posX posY width lengt = (
 fn createBox posX posY posZ width lengt height offsetX offsetY offsetZ= (
 	centroX = offsetX+posX+(width * 0.5)
 	centroY = offsetY+posY+(lengt * 0.5)
-	terreno[posZ][posY][posX] = box length:lengt width:width height:height mapcoords:on pos:[centroX-1,centroY-1,posZ-1]
+	/*terreno[posZ][posY][posX] =*/ box length:lengt width:width height:height mapcoords:on pos:[centroX-1,centroY-1,posZ-1]
 )
 fn createTerrain posX posY posZ width lengt height = (
-	posX = posX - (width * 0.5)
-	posY = posY - (lengt * 0.5)
-	createSurface 0 0 lengt width
+	--posX = posX - (width * 0.5)
+	--posY = posY - (lengt * 0.5)
+	--createSurface 0 0 lengt width
 	for z=1 to height do (
 		append terreno #()
 		for y=1 to width do (
@@ -61,6 +61,36 @@ fn createTerrain posX posY posZ width lengt height = (
 		)
 	)
 )
+
+fn createHouse posX posY posZ tamX tamY tamZ = (
+	for z=2 to tamZ+1 do(
+		for y=1 to tamY do(
+			for x=1 to tamX do(
+				if z==2 then (
+					createBox x y z 1 1 1 posX posY posZ
+				)
+				else if (z>2 and z<tamZ+1 and (y==1 or y== tamY or x==1 or x==tamX)) and ((z==3 and x==2 and y==1) or (z==3 and x==3 and y==1) or (z==4 and x==2 and y==1) or (z==4 and x==3 and y==1) or (z==5 and x==2 and y==1) or (z==5 and x==3 and y==1))==false then(
+					createBox x y z 1 1 1 posX posY posZ
+				)
+				else if z==tamZ+1 then(
+					createBox x y z 1 1 1 posX posY posZ
+				)
+			)
+		)
+	)
+	xa = 0
+	for z=tamZ+2 to tamZ*2  do(
+		for y=1 to tamY do(
+			for x=1 to tamX do(
+				if (x >= 1+xa AND x <= tamX-xa) then (
+					createBox x y z 1 1 1 posX posY posZ
+				)
+			)
+		)
+		xa = xa +1
+	)
+)
+
 
 
 
@@ -105,6 +135,7 @@ rollout datosGlobal "General" width:296 height:104
 
 	on generarMundo pressed do(
 		createTerrain 0 0 0 tamanoX tamanoY tamanoZ
+		createHouse 0 0 tamanoZ casaXY casaXY casaZ
 		
 	)
 	on tamanoXpla changed param do(
@@ -155,7 +186,6 @@ rollout datosPira "Piramides" width:296 height:104
 
 	spinner tamanoYpira "Tamaño ejeY    " pos:[190,85] width:93 height:16 enabled:true scale: 1 type: #integer range:[10,20,piraXY]
 	
-	spinner tamanoZpira "Tamaño ejeZ    " pos:[116,115] width:93 height:16 enabled:true scale: 1 type: #integer range:[10,20,piraZ]
 
 	on numPiram changed param do(
 		numPira=numPiram.value
@@ -170,10 +200,6 @@ rollout datosPira "Piramides" width:296 height:104
 	on tamanoYpira changed param do(
 		piraXY=tamanoYpira.value
 		tamanoXpira.value=piraXY
-		
-	)
-	on tamanoZpira changed param do(
-		piraZ=tamanoZpira.value
 		
 	)
 
