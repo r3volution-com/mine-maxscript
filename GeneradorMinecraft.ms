@@ -40,21 +40,27 @@ rollout minecraft "Generador Minecraft" width:310 height:600 (
 rollout datosGlobal "General" width:296 height:104
 
 (
+	button generarMundo "Generar Mundo" pos:[114,15] width:100 height:20 
 	
-	dropdownList elegirPlaneta "" pos:[114,15] width:91 height:21 items:#("Marte","Jupiter","Luna")
+	dropdownList elegirPlaneta "" pos:[114,45] width:91 height:21 items:#("Marte","Jupiter","Luna")
 
-	label labelPla "Planeta: " pos:[70,17] width:43 height:17
+	label labelPla "Planeta: " pos:[70,47] width:43 height:17
 
-	spinner tamanoXpla "Tamaño ejeX " pos:[42,55] width:95 height:16 enabled:true scale: 1 type: #integer range:[1,150,tamanoX]
+	spinner tamanoXpla "Tamaño ejeX " pos:[42,85] width:95 height:16 enabled:true scale: 1 type: #integer range:[1,100,tamanoX]
 
-	spinner tamanoYpla "Tamaño ejeY    " pos:[190,55] width:93 height:16 enabled:true scale: 1 type: #integer range:[1,150,tamanoY]
+	spinner tamanoYpla "Tamaño ejeY    " pos:[190,85] width:93 height:16 enabled:true scale: 1 type: #integer range:[1,100,tamanoY]
 	
-	spinner tamanoZpla "Tamaño ejeZ    " pos:[116,85] width:93 height:16 enabled:true scale: 1 type: #integer range:[1,150,tamanoZ]
+	spinner tamanoZpla "Tamaño ejeZ    " pos:[116,115] width:93 height:16 enabled:true scale: 1 type: #integer range:[1,3,tamanoZ]
 
-	dropdownList iluminacion "" pos:[132,115] width:91 height:21 items:#("Dia","Noche")
+	dropdownList iluminacion "" pos:[132,145] width:91 height:21 items:#("Dia","Noche")
 
-	label labelIlu "Iluminacion: " pos:[70,117] width:60 height:17
+	label labelIlu "Iluminacion: " pos:[70,147] width:60 height:17
 
+	on generarMundo pressed do(
+		createSurface 0 0 tamanoX tamanoY
+		createTerrain 0 0 0 tamanoX tamanoY tamanoZ
+		
+	)
 	on tamanoXpla changed param do(
 		tamanoX=tamanoXpla.value
 		
