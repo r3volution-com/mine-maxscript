@@ -1,34 +1,81 @@
-tamanoX = 0
-tamanoY = 0
-tamanoZ = 0
+tamanoX = 20
+tamanoY = 20
+tamanoZ = 1
 iluminacion = false
 numPira = 0
-piraXY = 0
-piraZ = 0
+piraXY = 10
+piraZ = 10
 numCasa = 0
-casaXY = 0
-casaZ = 0
-estaX = 0
-estaY = 0
-estaZ = 0
+casaXY = 5
+casaZ = 5
+estaX = 5
+estaY = 5
+estaZ = 5
 numEsta = 0
-coliXY = 0
-coliZ = 0
+coliXY = 20
+coliZ = 20
 numColi = 0
 numRio = 0
 numPuent = 0
-pagX = 0
-pagY = 0
-pagZ = 0
+pagX = 10
+pagY = 10
+pagZ = 3
 numPag = 0
 numMon = 0
-monX = 0
-monY = 0
-monZ = 0
-arbX = 0
-arbY = 0
-arbZ = 0
+monX = 10
+monY = 10
+monZ = 10
+arbX = 1
+arbY = 1
+arbZ = 4
 numArb = 0
+terreno = #(#(#()))
+
+
+
+fn createSurface posX posY width lengt = (
+	plane length:lengt width:width mapcoords:on pos:[posX,posY,0]
+)
+fn createBox posX posY posZ width lengt height offsetX offsetY offsetZ= (
+	centroX = offsetX+posX+(width * 0.5)
+	centroY = offsetY+posY+(lengt * 0.5)
+	terreno[posZ][posY][posX] = box length:lengt width:width height:height mapcoords:on pos:[centroX-1,centroY-1,posZ-1]
+)
+fn createTerrain posX posY posZ width lengt height = (
+	posX = posX - (width * 0.5)
+	posY = posY - (lengt * 0.5)
+	createSurface 0 0 lengt width
+	for z=1 to height do (
+		append terreno #()
+		for y=1 to width do (
+			append terreno[z] #()
+			for x=1 to lengt do (
+				append terreno[z][y] #()
+				ran = random 1 z
+				if ran == 1 then (
+					if z == 1 OR (z > 1 AND classOf terreno[z-1][y][x] as string == "Box" )  then(
+						createBox x y z 1 1 1 posX posY posZ
+					)
+				)
+			)
+		)
+	)
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 try(destroyDialog minecraft)
 catch()
@@ -40,15 +87,15 @@ rollout minecraft "Generador Minecraft" width:310 height:600 (
 rollout datosGlobal "General" width:296 height:104
 
 (
-	button generarMundo "Generar Mundo" pos:[114,15] width:100 height:20 
+	button generarMundo "GENERAR MUNDO" pos:[27,15] width:230 height:20 
 	
 	dropdownList elegirPlaneta "" pos:[114,45] width:91 height:21 items:#("Marte","Jupiter","Luna")
 
 	label labelPla "Planeta: " pos:[70,47] width:43 height:17
 
-	spinner tamanoXpla "Tamaño ejeX " pos:[42,85] width:95 height:16 enabled:true scale: 1 type: #integer range:[1,100,tamanoX]
+	spinner tamanoXpla "Tamaño ejeX " pos:[42,85] width:95 height:16 enabled:true scale: 1 type: #integer range:[20,100,tamanoX]
 
-	spinner tamanoYpla "Tamaño ejeY    " pos:[190,85] width:93 height:16 enabled:true scale: 1 type: #integer range:[1,100,tamanoY]
+	spinner tamanoYpla "Tamaño ejeY    " pos:[190,85] width:93 height:16 enabled:true scale: 1 type: #integer range:[20,100,tamanoY]
 	
 	spinner tamanoZpla "Tamaño ejeZ    " pos:[116,115] width:93 height:16 enabled:true scale: 1 type: #integer range:[1,3,tamanoZ]
 
@@ -57,7 +104,6 @@ rollout datosGlobal "General" width:296 height:104
 	label labelIlu "Iluminacion: " pos:[70,147] width:60 height:17
 
 	on generarMundo pressed do(
-		createSurface 0 0 tamanoX tamanoY
 		createTerrain 0 0 0 tamanoX tamanoY tamanoZ
 		
 	)
