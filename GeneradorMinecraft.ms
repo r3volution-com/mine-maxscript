@@ -4,7 +4,6 @@ tamanoZ = 1
 iluminacion = false
 numPira = 0
 piraXY = 10
-
 numCasa = 0
 casaXY = 5
 casaZ = 5
@@ -136,7 +135,7 @@ rollout datosGlobal "General" width:296 height:104
 
 	on generarMundo pressed do(
 		createTerrain 0 0 0 tamanoX tamanoY tamanoZ
-		createHouse 0 0 tamanoZ casaXY casaXY casaZ
+		createHouse 0 0 tamanoZ casaXY casaXY casaZ   ---Crear bucle para que se creen varias casas y cambiar aleatoriedad en su posicion de creacion en X e Y
 		
 	)
 	on tamanoXpla changed param do(
