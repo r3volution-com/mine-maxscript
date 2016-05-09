@@ -39,7 +39,7 @@ fn createSurface posX posY width lengt = (
 fn createBox posX posY posZ width lengt height offsetX offsetY offsetZ= (
 	centroX = offsetX+posX+(width * 0.5)
 	centroY = offsetY+posY+(lengt * 0.5)
-	/*terreno[posZ][posY][posX] =*/ box length:lengt width:width height:height mapcoords:on pos:[centroX-1,centroY-1,posZ-1]
+	box length:lengt width:width height:height mapcoords:on pos:[centroX-1,centroY-1,posZ-1]
 )
 fn createTerrain posX posY posZ width lengt height = (
 	--posX = posX - (width * 0.5)
@@ -53,8 +53,9 @@ fn createTerrain posX posY posZ width lengt height = (
 				append terreno[z][y] #()
 				ran = random 1 z
 				if ran == 1 then (
-					if z == 1 OR (z > 1 AND classOf terreno[z-1][y][x] as string == "Box" )  then(
+					if z == 1 OR (z > 1 AND terreno[z-1][y][x] == "Box" )  then(
 						createBox x y z 1 1 1 posX posY posZ
+						terreno[z][y][x] = "Box"
 					)
 				)
 			)
