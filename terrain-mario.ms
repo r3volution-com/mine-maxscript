@@ -7,12 +7,14 @@ fila = 1
 fn createSurface posX posY width lengt = (
 	plane length:lengt width:width mapcoords:on pos:[posX,posY,0]
 )
-fn createBox posX posY posZ width lengt height = (
-	centroX = posX+(width * 0.5)
-	centroY = posY+(lengt * 0.5)
+fn createBox posX posY posZ width lengt height offsetX offsetY offsetZ= (
+	centroX = offsetX+posX+(width * 0.5)
+	centroY = offsetY+posY+(lengt * 0.5)
 	terreno[posZ][posY][posX] = box length:lengt width:width height:height mapcoords:on pos:[centroX-1,centroY-1,posZ-1]
 )
 fn createTerrain posX posY posZ width lengt height = (
+	posX = posX - (width * 0.5)
+	posY = posY - (lengt * 0.5)
 	createSurface 0 0 width lengt
 	for z=1 to height do (
 		append terreno #()
@@ -23,7 +25,7 @@ fn createTerrain posX posY posZ width lengt height = (
 				ran = random 1 z
 				if ran == 1 then (
 					if z == 1 OR (z > 1 AND classOf terreno[z-1][y][x] as string == "Box" )  then(
-						createBox x y z 1 1 1
+						createBox x y z 1 1 1 posX posY posZ
 					)
 				)
 			)
