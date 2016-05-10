@@ -1,5 +1,5 @@
-tamanoX = 20
-tamanoY = 20
+tamanoX = 40
+tamanoY = 40
 tamanoZ = 1
 iluminacion = false
 numPira = 0
@@ -29,7 +29,7 @@ arbY = 1
 arbZ = 4
 numArb = 0
 terreno = #(#(#()))
-
+typePyramid=1
 
 
 fn createSurface posX posY width lengt = (
@@ -38,7 +38,7 @@ fn createSurface posX posY width lengt = (
 fn createBox posX posY posZ width lengt height offsetX offsetY offsetZ= (
 	centroX = offsetX+posX+(width * 0.5)
 	centroY = offsetY+posY+(lengt * 0.5)
-	box length:lengt width:width height:height mapcoords:on pos:[centroX-1,centroY-1,posZ-1]
+	box length:lengt width:width height:height mapcoords:on pos:[centroX-1,centroY-1,offsetZ+posZ-1]
 )
 fn createTerrain posX posY posZ width lengt height = (
 	--posX = posX - (width * 0.5)
@@ -92,18 +92,108 @@ fn createHouse posX posY posZ tamX tamY tamZ = (
 )
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+fn createPyramid type posX posY posZ tamX tamY  =(
+	
+	if type==1 then(
+		iniX=2
+		iniY=2
+		finX=tamX-1
+		finY=tamY-1
+		sube = false
+		tamZ=tamX/2
+		for z=1 to tamZ do(
+			for y=iniY to finY do(
+				for x=iniX to finX do(
+					createBox x y z 1 1 1 posX posY posZ
+					if (sube == false) then (
+						if (x == tamX/2 or x == (tamX/2)+1) and y == finY then(
+							createBox x y z 1 1 1 posX (posY+1) posZ
+						) else if (x == tamX/2 or x == (tamX/2)+1) and y == iniY then(
+							createBox x y z 1 1 1 posX (posY-1) posZ
+						) else if (y == tamY/2 or y == (tamY/2)+1) and x == finX then (
+							createBox x y z 1 1 1 (posX+1) posY posZ
+						) else if (y == tamY/2 or y == (tamY/2)+1) and x == iniX then (
+							createBox x y z 1 1 1 (posX-1) posY posZ
+						)
+					)
+				)
+			)
+			if sube == false then (
+				sube = true
+			) else (
+				finX=finX-2
+				iniX=iniX+2
+				finY=finY-2
+				iniY=iniY+2
+				sube = false
+			)
+		)
+	)
+	
+	else if type==2 then(
+		iniX=1
+		iniY=1
+		finX=tamX
+		finY=tamY
+		tamZ=tamX/2
+		for z=1 to tamZ do(
+			for y=iniY to finY do(
+				for x=iniX to finX do(
+					createBox x y z 1 1 1 posX posY posZ
+				)
+			)
+			finX=finX-1
+			iniX=iniX+1
+			finY=finY-1
+			iniY=iniY+1
+		)
+	)
+	
+	else if type==3 then(
+		iniX=3
+		iniY=3
+		finX=tamX-2
+		finY=tamY-2
+		sube = false
+		tamZ=tamX/2
+		inter=0
+		for z=1 to tamZ do(
+			for y=iniY to finY do(
+				for x=iniX to finX do(
+					createBox x y z 1 1 1 posX posY posZ
+					if(x==iniX and y==iniY) or (x==iniX and y==finY) or (x==finX and y==iniY) or (x==finX and y==finY) then(
+						if(sube==true) then(
+							createBox x y z 1 1 1 posX posY (posZ+1)
+						)
+					)
+				)
+			)
+			if sube == false then (
+				sube = true
+			) else (
+				finX=finX-2
+				iniX=iniX+2
+				finY=finY-2
+				iniY=iniY+2
+				sube = false
+			)
+		)
+		for x=1 to tamX do(
+			for y=1 to tamY do(
+				if (x==1 or x==tamX) or (y==1 or y==tamY) then(
+					if inter!=2 then(
+						inter=inter+1
+					)else(
+						for z=1 to (tamZ/2) do(
+							createBox x y z 1 1 1 posX posY posZ
+						)
+						inter=0
+					)
+				)
+			)
+		)
+	)
+)
 
 
 
@@ -123,9 +213,9 @@ rollout datosGlobal "General" width:296 height:104
 
 	label labelPla "Planeta: " pos:[70,47] width:43 height:17
 
-	spinner tamanoXpla "Tamaño ejeX " pos:[42,85] width:95 height:16 enabled:true scale: 1 type: #integer range:[20,100,tamanoX]
+	spinner tamanoXpla "Tamaño ejeX " pos:[42,85] width:95 height:16 enabled:true scale: 1 type: #integer range:[40,100,tamanoX]
 
-	spinner tamanoYpla "Tamaño ejeY    " pos:[190,85] width:93 height:16 enabled:true scale: 1 type: #integer range:[20,100,tamanoY]
+	spinner tamanoYpla "Tamaño ejeY    " pos:[190,85] width:93 height:16 enabled:true scale: 1 type: #integer range:[40,100,tamanoY]
 	
 	spinner tamanoZpla "Tamaño ejeZ    " pos:[116,115] width:93 height:16 enabled:true scale: 1 type: #integer range:[1,3,tamanoZ]
 
@@ -135,8 +225,8 @@ rollout datosGlobal "General" width:296 height:104
 
 	on generarMundo pressed do(
 		createTerrain 0 0 0 tamanoX tamanoY tamanoZ
-		createHouse 0 0 tamanoZ casaXY casaXY casaZ   ---Crear bucle para que se creen varias casas y cambiar aleatoriedad en su posicion de creacion en X e Y
-		
+		--createHouse 0 0 tamanoZ casaXY casaXY casaZ   ---Crear bucle para que se creen varias casas y cambiar aleatoriedad en su posicion de creacion en X e Y
+		createPyramid typePyramid 0 0 tamanoZ piraXY piraXY
 	)
 	on tamanoXpla changed param do(
 		tamanoX=tamanoXpla.value
@@ -176,7 +266,7 @@ rollout datosPira "Piramides" width:296 height:104
 
 (
 	
-	dropdownList elegirPiramide "" pos:[114,15] width:91 height:21 items:#("Tailandesa","Egipcia","Maya")
+	dropdownList elegirPiramide "" pos:[114,15] width:91 height:21 items:#("Maya","Egipcia","Tailandesa")
 
 	label labelPira "Piramide: " pos:[70,17] width:43 height:17
 	
@@ -206,11 +296,11 @@ rollout datosPira "Piramides" width:296 height:104
 	on elegirPiramide selected i do
 	(
 		if i==1 then(
-			
+			typePyramid=1
 		)else if i==2 then(
-			
+			typePyramid=2
 		)else if i==3 then(
-		
+			typePyramid=3
 		)
 	)
 )
