@@ -188,6 +188,35 @@ fn createPyramid type posX posY posZ tamX tamY  =(
 	)
 )
 
+fn createMountain posX posY posZ width lengt = (
+	iniX=1
+	iniY=1
+	finX=width
+	finY=lengt
+	tamZ=width/2
+	for z=1 to tamZ-2 do(
+		for y=iniY to finY do(
+			for x=iniX to finX do(
+				if x==iniX or y == iniY or x == finX or y == finY then (
+					ran=random 1 10
+					if ran < 8 then (
+						createBox x y z 1 1 1 posX posY posZ
+						if ran<3 then ( 
+							createBox x y z 1 1 1 posX posY (posZ+1)
+						)
+					)
+				) else (
+					createBox x y z 1 1 1 posX posY posZ
+				)
+			)
+		)
+		finX=finX-1
+		iniX=iniX+1
+		finY=finY-1
+		iniY=iniY+1
+	)
+)
+
 try(destroyDialog minecraft)
 catch()
 
