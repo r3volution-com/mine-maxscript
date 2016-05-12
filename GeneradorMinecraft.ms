@@ -39,24 +39,44 @@ fn createBox posX posY posZ width lengt height offsetX offsetY offsetZ= (
 	centroY = offsetY+posY+(lengt * 0.5)
 	box length:lengt width:width height:height mapcoords:on pos:[centroX-1,centroY-1,offsetZ+posZ-1]
 )
+fn createLayer posX posY posZ width lengt layerZ = (
+	for y=1 to lengt do (
+		append terreno[layerZ] #()
+		for x=1 to width do (
+			append terreno[layerZ][y] #()
+			if layerZ == 1 OR (layerZ > 1 AND terreno[layerZ-1][y][x] == "Box" AND terreno[layerZ][y][x] != "Box" )  then(
+				if x == 1 or y == 1 or x == width or y == lengt then (
+					ran = random 1 layerZ
+					if ran == 1 then (
+						createBox x y layerZ 1 1 1 posX posY posZ
+						terreno[layerZ][y][x] = "Box"
+					)
+				) else (
+					createBox x y layerZ 1 1 1 posX posY posZ
+					terreno[layerZ][y][x] = "Box"
+				)
+			)
+		)
+	)
+)
 fn createTerrain posX posY posZ width lengt height = (
 	--posX = posX - (width * 0.5)
 	--posY = posY - (lengt * 0.5)
 	--createSurface 0 0 lengt width
-	for z=1 to height do (
+	createLayer posX posY posZ width lengt 1
+	for z=2 to height do (
 		append terreno #()
-		for y=1 to width do (
-			append terreno[z] #()
-			for x=1 to lengt do (
-				append terreno[z][y] #()
-				ran = random 1 z
-				if ran == 1 then (
-					if z == 1 OR (z > 1 AND terreno[z-1][y][x] == "Box" )  then(
-						createBox x y z 1 1 1 posX posY posZ
-						terreno[z][y][x] = "Box"
-					)
-				)
-			)
+		rand = random (width/10) (width/5)
+		for mesetas=1 to rand do (
+			--print(posX + " "+ posY + " " + width + " " +lengt)
+			layerwidth = random (width/4) (width/2)
+			layerlengt = random (lengt/4) (lengt/2)
+			layerposX = posX + random 1 (width-layerwidth)
+			layerposY = posY+ random 1 (lengt-layerlengt)
+			--print(posX + " "+ posY + " " + width + " " +lengt)
+			createLayer layerposX layerposY posZ layerwidth layerlengt z
+			--posX = posX + layerwidth
+			--posY = posY + layerlengt
 		)
 	)
 )
