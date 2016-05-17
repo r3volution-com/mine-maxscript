@@ -33,11 +33,18 @@ typePyramid=1
 	
 --MATERIALES
 matMarte= multimaterial numsubs: 6
-matJupiter= multimaterial numsubs: 6
+matJupiterArriba= multimaterial numsubs: 6
+matJupiterAbajo= multimaterial numsubs: 6
 matLuna= multimaterial numsubs: 6
 matAgua= multimaterial numsubs: 6
 matAguacong= multimaterial numsubs: 6
-matArbol= multimaterial numsubs: 6
+matArbolTroncoMarte= multimaterial numsubs: 6
+matArbolTroncoJupiter= multimaterial numsubs: 6
+matArbolTroncoLuna= multimaterial numsubs: 6
+matArbolTroncoDentro= multimaterial numsubs: 6
+matArbolHojaMarte= multimaterial numsubs: 6
+matArbolHojaJupiter= multimaterial numsubs: 6
+matArbolHojaLuna= multimaterial numsubs: 6
 matMadera= multimaterial numsubs: 6
 matNieve= multimaterial numsubs: 6
 matPiedrabruta= multimaterial numsubs: 6
@@ -139,16 +146,16 @@ for p=1 to 6 do(
 		matPiedraarena[p].showInViewport=on
 			
 if p==1 then(
-		matJupiter[p].diffusemap=bitmapJupiterArriba
-		matJupiter[p].showInViewport=on	
+		matJupiterArriba[p].diffusemap=bitmapJupiterArriba
+		matJupiterArriba[p].showInViewport=on	
 
 		matArbolTroncoDentro[p].diffusemap=bitmapArbolTroncoDentro
 		matArbolTroncoDentro[p].showInViewport=on
 	)
 	
 	else if p== 2 then(
-		matJupiter[p].diffusemap =bitmapJupiterAbajo
-		matJupiter[p].showInViewport=on
+		matJupiterAbajo[p].diffusemap =bitmapJupiterAbajo
+		matJupiterAbajo[p].showInViewport=on
 			
 		matArbolTroncoMarte[p].diffusemap=bitmapArbolTroncoMarte
 		matArbolTroncoMarte[p].showInViewport=on
@@ -161,8 +168,8 @@ if p==1 then(
 					
 	)
 	else(
-		matJupiter[p].diffusemap =bitmapJupiterAbajo
-		matJupiter[p].showInViewport=on
+		matJupiterAbajo[p].diffusemap =bitmapJupiterAbajo
+		matJupiterAbajo[p].showInViewport=on
 			
 		matArbolTroncoMarte[p].diffusemap=bitmapArbolTroncoMarte
 		matArbolTroncoMarte[p].showInViewport=on
