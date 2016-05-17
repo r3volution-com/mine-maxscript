@@ -1,3 +1,4 @@
+tipoPlaneta = 1
 tamanoX = 40
 tamanoY = 40
 tamanoZ = 1
@@ -7,9 +8,9 @@ piraXY = 10
 numCasa = 0
 casaXY = 5
 casaZ = 5
-estaX = 5
-estaY = 5
-estaZ = 5
+estaX = 10
+estaY = 10
+estaZ = 10
 numEsta = 0
 coliXY = 20
 coliZ = 20
@@ -73,7 +74,6 @@ TexturaPiedraladrillo=sysInfo.currentdir + "\\texture\piedraladrillo\stone.png"
 TexturaPiedramoho=sysInfo.currentdir + "\\texture\piedramoho\moho.png"
 TexturaPiedratrabajada=sysInfo.currentdir + "\\texture\piedratrabajada\stone.png"
 TexturaPiedraarena=sysInfo.currentdir + "\\texture\piedraarena\sandstone.png"
-
 bitmapMarte=bitmaptexture filename: TexturaMarte
 bitmapJupiterArriba=bitmaptexture filename: TexturaJupiterArriba
 bitmapJupiterAbajo=bitmaptexture filename: TexturaJupiterAbajo
@@ -115,14 +115,14 @@ for p=1 to 6 do(
 		matAgua[p].diffusemap =bitmapAgua
 		matAgua[p].showInViewport=on
 			
-		matArbolHojaMarte[p].diffusemap =bitmapArbolHojaMarte
-		matArbolHojaMarte[p].showInViewport=on
+		--matArbolHojaMarte[p].diffusemap =bitmapArbolHojaMarte
+		--matArbolHojaMarte[p].showInViewport=on
 			
-		matArbolHojaJupiter[p].diffusemap =bitmapArbolHojaJupiter
-		matArbolHojaJupiter[p].showInViewport=on
+		--matArbolHojaJupiter[p].diffusemap =bitmapArbolHojaJupiter
+		--matArbolHojaJupiter[p].showInViewport=on
 			
-		matArbolHojaLuna[p].diffusemap =bitmapArbolHojaLuna
-		matArbolHojaLuna[p].showInViewport=on
+		--matArbolHojaLuna[p].diffusemap =bitmapArbolHojaLuna
+		--matArbolHojaLuna[p].showInViewport=on
 			
 		matMadera[p].diffusemap =bitmapMadera
 		matMadera[p].showInViewport=on
@@ -149,36 +149,36 @@ if p==1 then(
 		matJupiterArriba[p].diffusemap=bitmapJupiterArriba
 		matJupiterArriba[p].showInViewport=on	
 
-		matArbolTroncoDentro[p].diffusemap=bitmapArbolTroncoDentro
-		matArbolTroncoDentro[p].showInViewport=on
+		--matArbolTroncoDentro[p].diffusemap=bitmapArbolTroncoDentro
+		--matArbolTroncoDentro[p].showInViewport=on
 	)
 	
 	else if p== 2 then(
 		matJupiterAbajo[p].diffusemap =bitmapJupiterAbajo
 		matJupiterAbajo[p].showInViewport=on
 			
-		matArbolTroncoMarte[p].diffusemap=bitmapArbolTroncoMarte
-		matArbolTroncoMarte[p].showInViewport=on
+		--matArbolTroncoMarte[p].diffusemap=bitmapArbolTroncoMarte
+		--matArbolTroncoMarte[p].showInViewport=on
 			
-		matArbolTroncoJupiter[p].diffusemap=bitmapArbolTroncoJupiter
-		matArbolTroncoJupiter[p].showInViewport=on
+		--matArbolTroncoJupiter[p].diffusemap=bitmapArbolTroncoJupiter
+		--matArbolTroncoJupiter[p].showInViewport=on
 			
-		matArbolTroncoLuna[p].diffusemap=bitmapArbolTroncoLuna
-		matArbolTroncoLuna[p].showInViewport=on
+		--matArbolTroncoLuna[p].diffusemap=bitmapArbolTroncoLuna
+		--matArbolTroncoLuna[p].showInViewport=on
 					
 	)
 	else(
 		matJupiterAbajo[p].diffusemap =bitmapJupiterAbajo
 		matJupiterAbajo[p].showInViewport=on
 			
-		matArbolTroncoMarte[p].diffusemap=bitmapArbolTroncoMarte
-		matArbolTroncoMarte[p].showInViewport=on
+		--matArbolTroncoMarte[p].diffusemap=bitmapArbolTroncoMarte
+		--matArbolTroncoMarte[p].showInViewport=on
 			
-		matArbolTroncoJupiter[p].diffusemap=bitmapArbolTroncoJupiter
-		matArbolTroncoJupiter[p].showInViewport=on
+		--matArbolTroncoJupiter[p].diffusemap=bitmapArbolTroncoJupiter
+		--matArbolTroncoJupiter[p].showInViewport=on
 			
-		matArbolTroncoLuna[p].diffusemap=bitmapArbolTroncoLuna
-		matArbolTroncoLuna[p].showInViewport=on
+		--matArbolTroncoLuna[p].diffusemap=bitmapArbolTroncoLuna
+		--matArbolTroncoLuna[p].showInViewport=on
 	)
 
 )
@@ -204,12 +204,32 @@ fn createLayer posX posY posZ width lengt layerZ = (
 				if x == 1 or y == 1 or x == width or y == lengt then (
 					ran = random 1 layerZ
 					if ran == 1 then (
+						if(tipoPlaneta == 1) then(
+							createBox x y layerZ 1 1 1 posX posY posZ matMarte
+							terreno[layerZ][y][x] = "Box"
+						)
+						if(tipoPlaneta == 2) then(
+							createBox x y layerZ 1 1 1 posX posY posZ matLuna
+							terreno[layerZ][y][x] = "Box"
+						)
+						if(tipoPlaneta == 3) then(
+							createBox x y layerZ 1 1 1 posX posY posZ matJupiter
+							terreno[layerZ][y][x] = "Box"
+						)						
+					)
+				) else (
+					if(tipoPlaneta == 1) then(
 						createBox x y layerZ 1 1 1 posX posY posZ matMarte
 						terreno[layerZ][y][x] = "Box"
 					)
-				) else (
-					createBox x y layerZ 1 1 1 posX posY posZ matMarte
-					terreno[layerZ][y][x] = "Box"
+					if(tipoPlaneta == 2) then(
+						createBox x y layerZ 1 1 1 posX posY posZ matLuna
+						terreno[layerZ][y][x] = "Box"
+					)
+					if(tipoPlaneta == 3) then(
+						createBox x y layerZ 1 1 1 posX posY posZ matJupiter
+						terreno[layerZ][y][x] = "Box"
+					)
 				)
 			)
 		)
@@ -376,13 +396,37 @@ fn createMountain posX posY posZ width lengt = (
 				if x==iniX or y == iniY or x == finX or y == finY then (
 					ran=random 1 10
 					if ran < 8 then (
-						createBox x y z 1 1 1 posX posY posZ matMarte
+						if(tipoPlaneta == 1) then(
+							createBox x y z 1 1 1 posX posY posZ matMarte
+						)
+						if(tipoPlaneta == 2) then(
+							createBox x y z 1 1 1 posX posY posZ matLuna
+						)
+						if(tipoPlaneta == 3) then(
+							createBox x y z 1 1 1 posX posY posZ matJupiter
+						)	
 						if ran<3 then ( 
-							createBox x y z 1 1 1 posX posY (posZ+1) matMarte
+							if(tipoPlaneta == 1) then(
+								createBox x y z 1 1 1 posX posY (posZ+1) matMarte
+							)
+							if(tipoPlaneta == 2) then(
+								createBox x y z 1 1 1 posX posY (posZ+1) matLuna
+							)
+							if(tipoPlaneta == 3) then(
+								createBox x y z 1 1 1 posX posY (posZ+1) matJupiter
+							)	
 						)
 					)
 				) else (
-					createBox x y z 1 1 1 posX posY posZ matMarte
+					if(tipoPlaneta == 1) then(
+						createBox x y z 1 1 1 posX posY posZ matMarte
+					)
+					if(tipoPlaneta == 2) then(
+						createBox x y z 1 1 1 posX posY posZ matLuna
+					)
+					if(tipoPlaneta == 3) then(
+						createBox x y z 1 1 1 posX posY posZ matJupiter
+					)	
 				)
 			)
 		)
@@ -412,6 +456,7 @@ rollout datosGlobal "General" width:296 height:104
 	label labelIlu "Iluminacion: " pos:[70,147] width:60 height:17
 
 	on generarMundo pressed do(
+		
 		createTerrain 0 0 0 tamanoX tamanoY tamanoZ
 		--createHouse 0 0 tamanoZ casaXY casaXY casaZ   ---Crear bucle para que se creen varias casas y cambiar aleatoriedad en su posicion de creacion en X e Y
 		createPyramid typePyramid 0 0 tamanoZ piraXY piraXY
@@ -428,11 +473,11 @@ rollout datosGlobal "General" width:296 height:104
 	on elegirPlaneta selected i do
 	(
 		if i==1 then(
-			
+			tipoPlaneta = 1
 		)else if i==2 then(
-			
+			tipoPlaneta = 2
 		)else if i==3 then(
-		
+			tipoPlaneta = 3		
 		)
 	)	
 	on iluminacion  selected i do(
@@ -501,9 +546,9 @@ rollout datosPira "Piramides" width:296 height:104
 rollout datosEstablo "Establos" width:296 height:104
 (
 	spinner numEstab "Numero de Establos    " pos:[116,17] width:115 scale: 1 type: #integer height:16 enabled:true range:[0,3,numEsta]
-	spinner tamanoXesta "Tamaño ejeX " pos:[42,55] width:95 height:16 enabled:true scale: 1 type: #integer range:[5,10,estaX]
-	spinner tamanoYesta "Tamaño ejeY    " pos:[190,55] width:93 height:16 enabled:true scale: 1 type: #integer range:[5,10,estaY]
-	spinner tamanoZesta "Tamaño ejeZ    " pos:[116,85] width:93 height:16 enabled:true scale: 1 type: #integer range:[5,10,estaZ]
+	spinner tamanoXesta "Tamaño ejeX " pos:[42,55] width:95 height:16 enabled:true scale: 1 type: #integer range:[10,15,estaX]
+	spinner tamanoYesta "Tamaño ejeY    " pos:[190,55] width:93 height:16 enabled:true scale: 1 type: #integer range:[10,15,estaY]
+	spinner tamanoZesta "Tamaño ejeZ    " pos:[116,85] width:93 height:16 enabled:true scale: 1 type: #integer range:[10,15,estaZ]
 
 	on numEstab changed param do(
 		numEsta=numEstab.value
