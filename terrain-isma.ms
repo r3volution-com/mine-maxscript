@@ -197,7 +197,18 @@ fn createBridge posX posY posZ tamX tamY tamZ = (
 	)
 )
 
+fn crearLuces longitudPX longitudPY planoZ luces=(
+	 if luces==1 then(
+		luzdia=Omnilight rgb:(color 255 255 255) shadowColor:(color 0 0 0) multiplier:1 contrast:0 softenDiffuseEdge:0 nearAttenStart:0 nearAttenEnd:40 farAttenStart:80 farAttenEnd:200 decayRadius:197.2 atmosOpacity:100 atmosColorAmt:100 shadowMultiplier:1 pos:[-100.6906,80.2064,planoZ+200] 
+		luzdia.baseObject.castShadows=true
+	
+	 )else(
+		luznoche=Omnilight rgb:(color 75 75 75) shadowColor:(color 0 0 0) multiplier:1 contrast:0 softenDiffuseEdge:0 nearAttenStart:0 nearAttenEnd:40 farAttenStart:80 farAttenEnd:200 decayRadius:197.2 atmosOpacity:100 atmosColorAmt:100 shadowMultiplier:1 pos:[-100.6906,80.2064,planoZ+200] 
+		luznoche.castShadows =on
+	 )
+	 
+ )
 
 
 
-createBridge 0 0 0 3 5 1
+crearLuces 40 40 10
