@@ -572,6 +572,15 @@ fn createPagoda posX posY posZ tamX tamY  numPlanta = (
 		)
 )
 
+fn createWorld dumm = (
+		createTerrain 0 0 0 tamanoX tamanoY tamanoZ
+		createMountarin 0 tamanoZ 
+		--createHouse 0 0 tamanoZ casaXY casaXY casaZ   ---Crear bucle para que se creen varias casas y cambiar aleatoriedad en su posicion de creacion en X e Y
+		--createPyramid typePyramid 0 0 tamanoZ piraXY piraXY
+		createTree 0 0 tamanoZ arbX arbY arbZ
+		--createPagoda 0 0 tamanoZ pagX pagY pagZ
+)
+
 
 try(destroyDialog minecraft)
 catch()
@@ -592,12 +601,7 @@ rollout datosGlobal "General" width:296 height:104
 	label labelIlu "Iluminacion: " pos:[70,147] width:60 height:17
 
 	on generarMundo pressed do(
-		
-		createTerrain 0 0 0 tamanoX tamanoY tamanoZ
-		--createHouse 0 0 tamanoZ casaXY casaXY casaZ   ---Crear bucle para que se creen varias casas y cambiar aleatoriedad en su posicion de creacion en X e Y
-		--createPyramid typePyramid 0 0 tamanoZ piraXY piraXY
-		--createTree 0 0 tamanoZ arbX arbY arbZ
-		createPagoda 0 0 tamanoZ pagX pagY pagZ
+		createWorld 0
 	)
 	on tamanoXpla changed param do(
 		tamanoX=tamanoXpla.value
