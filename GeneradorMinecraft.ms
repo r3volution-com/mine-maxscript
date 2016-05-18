@@ -8,17 +8,17 @@ piraXY = 10
 numCasa = 0
 casaXY = 5
 casaZ = 5
-estaX = 10
-estaY = 10
-estaZ = 10
+estaX = 5
+estaY = 5
+estaZ = 5
 numEsta = 0
 coliXY = 20
 coliZ = 20
 numColi = 0
 numRio = 0
 numPuent = 0
-pagX = 10
-pagY = 10
+pagX = 5
+pagY = 5
 pagZ = 3
 numPag = 0
 numMon = 0
@@ -684,9 +684,9 @@ rollout datosPira "Piramides" width:296 height:104
 rollout datosEstablo "Establos" width:296 height:104
 (
 	spinner numEstab "Numero de Establos    " pos:[116,17] width:115 scale: 1 type: #integer height:16 enabled:true range:[0,3,numEsta]
-	spinner tamanoXesta "Tamaño ejeX " pos:[42,55] width:95 height:16 enabled:true scale: 1 type: #integer range:[10,15,estaX]
-	spinner tamanoYesta "Tamaño ejeY    " pos:[190,55] width:93 height:16 enabled:true scale: 1 type: #integer range:[10,15,estaY]
-	spinner tamanoZesta "Tamaño ejeZ    " pos:[116,85] width:93 height:16 enabled:true scale: 1 type: #integer range:[10,15,estaZ]
+	spinner tamanoXesta "Tamaño ejeX " pos:[42,55] width:95 height:16 enabled:true scale: 1 type: #integer range:[5,10,estaX]
+	spinner tamanoYesta "Tamaño ejeY    " pos:[190,55] width:93 height:16 enabled:true scale: 1 type: #integer range:[5,10,estaY]
+	spinner tamanoZesta "Tamaño ejeZ    " pos:[116,85] width:93 height:16 enabled:true scale: 1 type: #integer range:[5,10,estaZ]
 
 	on numEstab changed param do(
 		numEsta=numEstab.value
@@ -737,8 +737,8 @@ rollout datosPuente "Rios y Puentes" width:296 height:104
 rollout datosPagoda "Pagodas" width:296 height:104
 (
 	spinner numPago "Numero de Pagodas    " pos:[116,17] width:115 scale: 1 type: #integer height:16 enabled:true range:[0,2,numPag]
-	spinner tamanoXpag "Tamaño ejeX " pos:[42,55] width:95 height:16 enabled:true scale: 1 type: #integer range:[10,20,pagX]
-	spinner tamanoYpag "Tamaño ejeY    " pos:[190,55] width:93 height:16 enabled:true scale: 1 type: #integer range:[10,20,pagY]
+	spinner tamanoXpag "Tamaño ejeX " pos:[42,55] width:95 height:16 enabled:true scale: 1 type: #integer range:[5,10,pagX]
+	spinner tamanoYpag "Tamaño ejeY    " pos:[190,55] width:93 height:16 enabled:true scale: 1 type: #integer range:[5,10,pagY]
 	spinner tamanoZpag "Tamaño en plantas    " pos:[116,85] width:93 height:16 enabled:true scale: 1 type: #integer range:[3,5,pagZ]
 
 	on numPago changed param do(
@@ -746,35 +746,17 @@ rollout datosPagoda "Pagodas" width:296 height:104
 	)
 	on tamanoXpag changed param do(
 		pagX=tamanoXpag.value
+		tamanoYpag.value=pagX
 	)
 	on tamanoYpag changed param do(
 		pagY=tamanoYpag.value
+		tamanoYpag.value=pagY
 	)
 	on tamanoZpag changed param do(
 		pagZ=tamanoZpag.value		
 	)
 )
 
-rollout datosMontaña "Montañas" width:296 height:104
-(
-	spinner numMont "Numero de Montañas    " pos:[116,17] width:115 scale: 1 type: #integer height:16 enabled:true range:[0,2,numMon]
-	spinner tamanoXmon "Tamaño ejeX " pos:[42,55] width:95 height:16 enabled:true scale: 1 type: #integer range:[10,20,monX]
-	spinner tamanoYmon "Tamaño ejeY    " pos:[190,55] width:93 height:16 enabled:true scale: 1 type: #integer range:[10,20,monY]
-	spinner tamanoZmon "Tamaño ejeZ    " pos:[116,85] width:93 height:16 enabled:true scale: 1 type: #integer range:[10,20,monZ]
-
-	on numMont changed param do(
-		numMon=numMont.value
-	)
-	on tamanoXmon changed param do(
-		monX=tamanoXmon.value
-	)
-	on tamanoYmon changed param do(
-		monY=tamanoYmon.value
-	)
-	on tamanoZmon changed param do(
-		monZ=tamanoZmon.value		
-	)
-)
 
 rollout datosVegetacion "Vegetacion" width:296 height:104
 (
