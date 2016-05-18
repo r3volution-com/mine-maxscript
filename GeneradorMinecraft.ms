@@ -197,38 +197,36 @@ fn createBox posX posY posZ width lengt height offsetX offsetY offsetZ Tipomater
 )
 fn createLayer posX posY posZ width lengt layerZ = (
 	for y=1 to lengt do (
-		append terreno[layerZ] #()
 		for x=1 to width do (
-			append terreno[layerZ][y] #()
-			if layerZ == 1 OR (layerZ > 1 AND terreno[layerZ-1][y][x] == "Box" AND terreno[layerZ][y][x] != "Box" )  then(
+			if layerZ == 1 OR (layerZ > 1 AND terreno[layerZ-1][posY+y][posX+x] == "Box" AND terreno[layerZ][posY+y][posX+x] != "Box" )  then(
 				if x == 1 or y == 1 or x == width or y == lengt then (
 					ran = random 1 layerZ
 					if ran == 1 then (
 						if(tipoPlaneta == 1) then(
 							createBox x y layerZ 1 1 1 posX posY posZ matMarte
-							terreno[layerZ][y][x] = "Box"
+							terreno[layerZ][posY+y][posX+x] = "Box"
 						)
 						if(tipoPlaneta == 2) then(
 							createBox x y layerZ 1 1 1 posX posY posZ matLuna
-							terreno[layerZ][y][x] = "Box"
+							terreno[layerZ][posY+y][posX+x] = "Box"
 						)
 						if(tipoPlaneta == 3) then(
 							createBox x y layerZ 1 1 1 posX posY posZ matJupiter
-							terreno[layerZ][y][x] = "Box"
+							terreno[layerZ][posY+y][posX+x] = "Box"
 						)						
 					)
 				) else (
 					if(tipoPlaneta == 1) then(
 						createBox x y layerZ 1 1 1 posX posY posZ matMarte
-						terreno[layerZ][y][x] = "Box"
+						terreno[layerZ][posY+y][posX+x] = "Box"
 					)
 					if(tipoPlaneta == 2) then(
 						createBox x y layerZ 1 1 1 posX posY posZ matLuna
-						terreno[layerZ][y][x] = "Box"
+						terreno[layerZ][posY+y][posX+x] = "Box"
 					)
 					if(tipoPlaneta == 3) then(
 						createBox x y layerZ 1 1 1 posX posY posZ matJupiter
-						terreno[layerZ][y][x] = "Box"
+						terreno[layerZ][posY+y][posX+x] = "Box"
 					)
 				)
 			)
@@ -239,9 +237,18 @@ fn createTerrain posX posY posZ width lengt height = (
 	--posX = posX - (width * 0.5)
 	--posY = posY - (lengt * 0.5)
 	--createSurface 0 0 lengt width
+	terreno = #(#(#()))
+	for z=1 to height do (
+		append terreno #()
+		for y=1 to lengt do (
+			append terreno[z] #()
+			for x=1 to width do (
+				append terreno[z][y] #()
+			)
+		)
+	)
 	createLayer posX posY posZ width lengt 1
 	for z=2 to height do (
-		append terreno #()
 		rand = random (width/10) (width/5)
 		for mesetas=1 to rand do (
 			--print(posX + " "+ posY + " " + width + " " +lengt)
