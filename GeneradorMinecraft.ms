@@ -597,6 +597,63 @@ fn createRuine posX posY posZ tamX tamY tamZ = (
 	)
 )
 
+fn createRiver posX posY posZ tamX tamY tamZ = (
+	for y=1 to tamY do(
+		for x=((tamX/4)+1) to ((tamX/4)+3) do(
+		  createBox x y tamZ 1 1 1 posX posY posZ matAgua
+		)
+  )
+	for z=1 to tamZ do(
+		for y=1 to (tamY-(tamY/4)) do(
+			for  x=((tamX/4)-2) to (tamX/4)do(
+				if z==tamZ and (x==((tamX/4))) then(
+					createBox x y z 1 1 1 posX posY posZ matPiedrabruta
+				)
+				else if (z==2 and ((x==((tamX/4))) or (x==((tamX/4)-1)))) then(
+					createBox x y z 1 1 1 posX posY posZ matPiedrabruta
+				)
+				else if z==1 then(
+					createBox x y z 1 1 1 posX posY posZ matPiedrabruta					
+				)
+			)
+		)
+	)
+	for z=1 to tamZ do(
+		for  y=1 to (tamY-(tamY/4)) do(
+			for x=((tamX/4)+4) to ((tamX/4)+6) do(
+				if z==tamZ and (x==((tamX/4)+4)) then(
+					createBox x y z 1 1 1 posX posY posZ matPiedrabruta
+				)
+				else if (z==2 and ((x==((tamX/4))+4) or (x==((tamX/4)+5)))) then(
+					createBox x y z 1 1 1 posX posY posZ matPiedrabruta
+				)
+				else if z==1 then(
+					createBox x y z 1 1 1 posX posY posZ matPiedrabruta					
+				)		
+			)
+		)
+	)
+)
+fn createBridge posX posY posZ tamX tamY tamZ = (
+	for y=1 to tamY do(
+		for x=1 to tamX do(
+			createBox x y 1 1 1 1 posX posY posZ matPiedrabruta
+		)
+	)
+)
+
+fn crearLuces longitudPX longitudPY planoZ luces=(
+	 if luces==1 then(
+		luzdia=Omnilight rgb:(color 255 255 255) shadowColor:(color 0 0 0) multiplier:1 contrast:0 softenDiffuseEdge:0 nearAttenStart:0 nearAttenEnd:40 farAttenStart:80 farAttenEnd:200 decayRadius:197.2 atmosOpacity:100 atmosColorAmt:100 shadowMultiplier:1 pos:[-100.6906,80.2064,planoZ+200] 
+		luzdia.baseObject.castShadows=true
+	
+	 )else(
+		luznoche=Omnilight rgb:(color 75 75 75) shadowColor:(color 0 0 0) multiplier:1 contrast:0 softenDiffuseEdge:0 nearAttenStart:0 nearAttenEnd:40 farAttenStart:80 farAttenEnd:200 decayRadius:197.2 atmosOpacity:100 atmosColorAmt:100 shadowMultiplier:1 pos:[-100.6906,80.2064,planoZ+200] 
+		luznoche.castShadows =on
+	 )
+	 
+ )
+
 fn createWorld dumm = (
 		createTerrain 0 0 0 tamanoX tamanoY tamanoZ
 		createMountain 0 (tamanoY-(tamanoY/4)) tamanoZ (tamanoX/4) (tamanoY/4)
@@ -631,6 +688,10 @@ fn createWorld dumm = (
 		--createTree 0 0 tamanoZ arbX arbY arbZ
 		--createPagoda 0 0 tamanoZ pagX pagY pagZ
 		--createRuine 0 0 0 5 5 5
+		--createRiver 0 0 0 tamanoX tamanoY tamanoZ
+		--createBridge posX posY posZ tamX tamY tamZ
+		--crearLuces tamanoX tamanoY alturaZ
+		
 )
 
 
