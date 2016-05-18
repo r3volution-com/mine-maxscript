@@ -195,6 +195,18 @@ fn createBox posX posY posZ width lengt height offsetX offsetY offsetZ Tipomater
 	centroY = offsetY+posY+(lengt * 0.5)
 	aux= box length:lengt width:width height:height mapcoords:on pos:[centroX-1,centroY-1,offsetZ+posZ-1]  material:Tipomaterial
 )
+fn createFill posX posY posZ width lengt height = (
+	for z=1 to height do (
+		for y=1 to lengt do (
+			for x=1 to width do (
+				if terreno[z][y][x] != "Box" then (
+					createBox x y z 1 1 1 posX posY posZ matMarte
+					terreno[z][y][x] = "Box"
+				)
+			)
+		)
+	)
+)
 fn createLayer posX posY posZ width lengt layerZ = (
 	for y=1 to lengt do (
 		for x=1 to width do (
@@ -264,6 +276,7 @@ fn createTerrain posX posY posZ width lengt height = (
 	)
 )
 fn createHouse posX posY posZ tamX tamY tamZ = (
+	createFill posX posY 0 tamX tamY posZ 
 	for z=1 to tamZ do(
 		for y=1 to tamY do(
 			for x=1 to tamX do(
@@ -292,6 +305,7 @@ fn createHouse posX posY posZ tamX tamY tamZ = (
 	)
 )
 fn createPyramid type posX posY posZ tamX tamY  =(
+	createFill posX posY 0 tamX tamY posZ 
 	if type==1 then(
 		iniX=2
 		iniY=2
@@ -392,6 +406,7 @@ fn createPyramid type posX posY posZ tamX tamY  =(
 )
 
 fn createMountain posX posY posZ width lengt = (
+	createFill posX posY 0 width lengt posZ 
 	iniX=1
 	iniY=1
 	finX=width
