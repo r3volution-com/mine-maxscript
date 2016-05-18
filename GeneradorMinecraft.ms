@@ -519,6 +519,60 @@ fn createTree posX posY posZ tamX tamY tamZ = (
 	)
 )
 
+
+fn createPagoda posX posY posZ tamX tamY  numPlanta = (
+	createFill posX posY 0 tamX tamY posZ
+	tamZ=tamY
+	for p=1 to numPlanta do(
+		for z=1 to tamZ do(
+			for y=1 to tamY do(
+				for x=1 to tamX do(
+					if z==1 then (
+						createBox x y z 1 1 1 posX posY posZ matMadera
+					)
+					else if z>1 and z<tamZ and (y==1 or y== tamY or x==1 or x==tamX) then(
+						createBox x y z 1 1 1 posX posY posZ matMadera
+					)
+					else if z==tamZ then(
+						createBox x y z 1 1 1 posX posY posZ matMarte
+					)
+				)
+			)
+		)
+		
+		for z=tamZ-2 to tamZ do(
+			for y=1 to tamY+4 do(
+				for x=1 to tamX+4 do(
+					if z==tamZ-1 then (
+						createBox x y z 1 1 1 (posX-2) (posY-2) posZ matMadera
+					)
+					else if z==tamZ and (y<tamY+3 and x<tamX+3 )then(
+						createBox x y z 1 1 1 (posX-1) (posY-1) posZ matMarte
+					)
+				)
+			)
+		)
+		posZ=posZ+tamZ
+	)
+		tamZ=tamX*numPlanta+1
+		iniX=1
+		iniY=1
+		finX=tamX
+		finY=tamY
+		for z=tamZ+1 to tamZ+(tamX/2) do(
+			for y=iniY to finY do(
+				for x=iniX to finX do(
+					createBox x y z 1 1 1 posX posY 0 matPiedraarena
+				)
+			)
+			finX=finX-1
+			iniX=iniX+1
+			finY=finY-1
+			iniY=iniY+1
+		)
+)
+
+
 try(destroyDialog minecraft)
 catch()
 
@@ -542,7 +596,8 @@ rollout datosGlobal "General" width:296 height:104
 		createTerrain 0 0 0 tamanoX tamanoY tamanoZ
 		--createHouse 0 0 tamanoZ casaXY casaXY casaZ   ---Crear bucle para que se creen varias casas y cambiar aleatoriedad en su posicion de creacion en X e Y
 		--createPyramid typePyramid 0 0 tamanoZ piraXY piraXY
-		createTree 0 0 tamanoZ arbX arbY arbZ
+		--createTree 0 0 tamanoZ arbX arbY arbZ
+		createPagoda 0 0 tamanoZ pagX pagY pagZ
 	)
 	on tamanoXpla changed param do(
 		tamanoX=tamanoXpla.value
@@ -672,12 +727,8 @@ rollout datosColiseo "Coliseos" width:296 height:104
 
 rollout datosPuente "Rios y Puentes" width:296 height:104
 (
-	spinner numRios "Numero de Rios    " pos:[116,17] width:115 scale: 1 type: #integer height:16 enabled:true range:[0,2,numRio]
-	spinner numPuen "Numero de Puentes por Rio   " pos:[116,50] width:115 scale: 1 type: #integer height:16 enabled:true range:[0,2,numPuent]
+	spinner numPuen "Numero de Puentes por Rio   " pos:[116,17] width:115 scale: 1 type: #integer height:16 enabled:true range:[0,2,numPuent]
 
-	on numRios changed param do(
-		numRio=numRios.value
-	)
 	on numPuen changed param do(
 		numPuent=numPuen.value		
 	)
@@ -688,7 +739,7 @@ rollout datosPagoda "Pagodas" width:296 height:104
 	spinner numPago "Numero de Pagodas    " pos:[116,17] width:115 scale: 1 type: #integer height:16 enabled:true range:[0,2,numPag]
 	spinner tamanoXpag "Tamaño ejeX " pos:[42,55] width:95 height:16 enabled:true scale: 1 type: #integer range:[10,20,pagX]
 	spinner tamanoYpag "Tamaño ejeY    " pos:[190,55] width:93 height:16 enabled:true scale: 1 type: #integer range:[10,20,pagY]
-	spinner tamanoZpag "Tamaño en plantas    " pos:[116,85] width:93 height:16 enabled:true scale: 1 type: #integer range:[3,6,pagZ]
+	spinner tamanoZpag "Tamaño en plantas    " pos:[116,85] width:93 height:16 enabled:true scale: 1 type: #integer range:[3,5,pagZ]
 
 	on numPago changed param do(
 		numPag=numPago.value
