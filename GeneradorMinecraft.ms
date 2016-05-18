@@ -54,26 +54,27 @@ matPiedramoho= multimaterial numsubs: 6
 matPiedratrabajada= multimaterial numsubs: 6
 matPiedraarena= multimaterial numsubs: 6
 	
-TexturaMarte=sysInfo.currentdir + "\\texture\Marte\sand.png"
-TexturaJupiterArriba=sysInfo.currentdir + "\\texture\Jupiter\top.png"
-TexturaJupiterAbajo=sysInfo.currentdir + "\\texture\Jupiter\side.png"
-TexturaLuna=sysInfo.currentdir + "\\texture\Luna\suelo.png"
-TexturaAgua=sysInfo.currentdir + "\\texture\agua\agua.png"
-TexturaAguacong=sysInfo.currentdir + "\\texture\aguacong\aguacongelada.png"
-TexturaArbolTroncoMarte=sysInfo.currentdir + "\\texture\arbol\tronco2.png"
-TexturaArbolTroncoJupiter=sysInfo.currentdir + "\\texture\arbol\tronco.jpg"
-TexturaArbolTroncoLuna=sysInfo.currentdir + "\\texture\arbol\tronco3.png"
-TexturaArbolTroncoDentro=sysInfo.currentdir + "\\texture\arbol\troncodentro.png"
-TexturaArbolHojaMarte=sysInfo.currentdir + "\\texture\arbol\hoja2.png"
-TexturaArbolHojaJupiter=sysInfo.currentdir + "\\texture\arbol\hoja.png"
-TexturaArbolHojaLuna=sysInfo.currentdir + "\\texture\arbol\hoja3.png"
-TexturaMadera=sysInfo.currentdir + "\\texture\madera\madera.png"
-TexturaNieve=sysInfo.currentdir + "\\texture\nieve\nieve.gif"
-TexturaPiedrabruta=sysInfo.currentdir + "\\texture\piedrabruta\lado.png"
-TexturaPiedraladrillo=sysInfo.currentdir + "\\texture\piedraladrillo\stone.png"
-TexturaPiedramoho=sysInfo.currentdir + "\\texture\piedramoho\moho.png"
-TexturaPiedratrabajada=sysInfo.currentdir + "\\texture\piedratrabajada\stone.png"
-TexturaPiedraarena=sysInfo.currentdir + "\\texture\piedraarena\sandstone.png"
+TexturaMarte=sysInfo.currentdir + "\\texture/Marte/sand.png"
+TexturaJupiterArriba=sysInfo.currentdir + "\\texture/Jupiter/top.png"
+TexturaJupiterAbajo=sysInfo.currentdir + "\\texture/Jupiter/side.png"
+TexturaLuna=sysInfo.currentdir + "\\texture/Luna/suelo.png"
+TexturaAgua=sysInfo.currentdir + "\\texture/agua/agua.png"
+TexturaAguacong=sysInfo.currentdir + "\\texture/aguacong/aguacongelada.png"
+TexturaArbolTroncoMarte=sysInfo.currentdir + "\\texture/arbol/tronco2.png"
+TexturaArbolTroncoJupiter=sysInfo.currentdir + "\\texture/arbol/tronco.jpg"
+TexturaArbolTroncoLuna=sysInfo.currentdir + "\\texture/arbol/tronco3.png"
+TexturaArbolTroncoDentro=sysInfo.currentdir + "\\texture/arbol/troncodentro.png"
+TexturaArbolHojaMarte=sysInfo.currentdir + "\\texture/arbol/hoja2.jpg"
+TexturaArbolHojaJupiter=sysInfo.currentdir + "\\texture/arbol/hoja.png"
+TexturaArbolHojaLuna=sysInfo.currentdir + "\\texture/arbol/hoja3.png"
+TexturaMadera=sysInfo.currentdir + "\\texture/madera/madera.png"
+TexturaNieve=sysInfo.currentdir + "\\texture/nieve/nieve.gif"
+TexturaPiedrabruta=sysInfo.currentdir + "\\texture/piedrabruta/lado.png"
+TexturaPiedraladrillo=sysInfo.currentdir + "\\texture/piedraladrillo/stone.png"
+TexturaPiedramoho=sysInfo.currentdir + "\\texture/piedramoho/moho.png"
+TexturaPiedratrabajada=sysInfo.currentdir + "\\texture/piedratrabajada/stone.png"
+TexturaPiedraarena=sysInfo.currentdir + "\\texture/piedraarena/sandstone.png"
+
 bitmapMarte=bitmaptexture filename: TexturaMarte
 bitmapJupiterArriba=bitmaptexture filename: TexturaJupiterArriba
 bitmapJupiterAbajo=bitmaptexture filename: TexturaJupiterAbajo
@@ -459,6 +460,65 @@ fn createMountain posX posY posZ width lengt = (
 	)
 )
 
+fn createTree posX posY posZ tamX tamY tamZ = (
+	createFill posX posY 0 tamX tamY posZ
+	hojicascont=0
+	aux1=tamX
+	aux2=tamY
+	rand = random (tamZ*1.5) (tamZ*2)
+	rand2 = random 1 2
+	
+	for z=1 to tamZ do(
+		for y=1 to tamY do(
+			for x=1 to tamX do(
+				if(tipoPlaneta == 1) then(
+				createBox x y z 1 1 1 posX posY posZ matArbolTroncoMarte
+				)
+				if(tipoPlaneta == 2) then(
+				createBox x y z 1 1 1 posX posY posZ matArbolTroncoJupiter
+				)
+				if(tipoPlaneta == 3) then(
+				createBox x y z 1 1 1 posX posY posZ matArbolTroncoLuna
+				)
+			)
+		)
+	)
+
+	hojicascont=tamZ
+	for z=hojicascont+1 to (rand-1) do(
+		if rand2==1 then(
+			for y=1 to aux2*3 do(
+				for x=1 to aux1*3 do(
+					if(tipoPlaneta == 1) then(
+						createBox x y z 1 1 1 (posX-1) (posY-1) posZ matArbolHojaMarte
+					)
+					if(tipoPlaneta == 2) then(
+						createBox x y z 1 1 1 (posX-1) (posY-1) posZ matArbolHojaJupiter
+					)
+					if(tipoPlaneta == 3) then(
+						createBox x y z 1 1 1 (posX-1) (posY-1) posZ matArbolHojaLuna
+					)
+				)
+			)
+		)
+		if rand2==2 then(
+			for y=1 to aux2*5 do(
+				for x=1 to aux1*5 do(
+					if(tipoPlaneta == 1) then(
+						createBox x y z 1 1 1 (posX-2) (posY-2) posZ matArbolHojaMarte
+					)
+					if(tipoPlaneta == 2) then(
+						createBox x y z 1 1 1 (posX-2) (posY-2) posZ matArbolHojaJupiter
+					)
+					if(tipoPlaneta == 3) then(
+						createBox x y z 1 1 1 (posX-2) (posY-2) posZ matArbolHojaLuna
+					)
+				)
+			)
+		)
+	)
+)
+
 try(destroyDialog minecraft)
 catch()
 
@@ -481,7 +541,8 @@ rollout datosGlobal "General" width:296 height:104
 		
 		createTerrain 0 0 0 tamanoX tamanoY tamanoZ
 		--createHouse 0 0 tamanoZ casaXY casaXY casaZ   ---Crear bucle para que se creen varias casas y cambiar aleatoriedad en su posicion de creacion en X e Y
-		createPyramid typePyramid 0 0 tamanoZ piraXY piraXY
+		--createPyramid typePyramid 0 0 tamanoZ piraXY piraXY
+		createTree 0 0 tamanoZ arbX arbY arbZ
 	)
 	on tamanoXpla changed param do(
 		tamanoX=tamanoXpla.value
