@@ -200,9 +200,11 @@ fn createFill posX posY posZ width lengt height = (
 	for z=1 to height do (
 		for y=1 to lengt do (
 			for x=1 to width do (
-				if terreno[z][y][x] != "Box" then (
+				if z <= tamanoZ and terreno[z][y][x] != "Box" then (
 					createBox x y z 1 1 1 posX posY posZ matMarte
 					terreno[z][y][x] = "Box"
+				) else (
+					createBox x y z 1 1 1 posX posY posZ matMarte
 				)
 			)
 		)
@@ -579,15 +581,15 @@ fn createRuine posX posY posZ tamX tamY tamZ = (
 		for y=1 to tamY do(
 			for x=1 to tamX do(
 				if z==1 then (
-					createBox x y z 1 1 1 posX posY posZ matPiedramoho
+					createBox x y z 1 1 1 posX posY posZ matPiedraladrillo
 				)else if(z<tamZ) then (
 					if ((y==1 or y== tamY or x==1 or x==tamX)) and ((z==2 and x==2 and y==1) or (z==2 and x==3 and y==1) or (z==3 and x==2 and y==1) or (z==3 and x==3 and y==1) or (z==4 and x==2 and y==1) or (z==4 and x==3 and y==1))==false then(
-						createBox x y z 1 1 1 posX posY posZ matPiedramoho
+						createBox x y z 1 1 1 posX posY posZ matPiedraladrillo
 					)
 				)else(
 					rand= random 0 3
 					if(rand==0 and (y==1 or y== tamY or x==1 or x==tamX)) then(
-						createBox x y z 1 1 1 posX posY posZ matPiedramoho
+						createBox x y z 1 1 1 posX posY posZ matPiedraladrillo
 					)
 				)
 			)
@@ -597,12 +599,38 @@ fn createRuine posX posY posZ tamX tamY tamZ = (
 
 fn createWorld dumm = (
 		createTerrain 0 0 0 tamanoX tamanoY tamanoZ
-		createMountarin 0 tamanoZ 
-		--createHouse 0 0 tamanoZ casaXY casaXY casaZ   ---Crear bucle para que se creen varias casas y cambiar aleatoriedad en su posicion de creacion en X e Y
+		createMountain 0 (tamanoY-(tamanoY/4)) tamanoZ (tamanoX/4) (tamanoY/4)
+		createMountain ((tamanoX/4)+3) (tamanoY-(tamanoY/4)) tamanoZ (tamanoX/4) (tamanoY/4)
+		
+		if casaXY > ((tamanoX/4)-2) (
+			casaXY = (tamanoX/4)-2)
+		)
+		posYCasa = random 1 (tamanoX/10)
+		for i=1 to numCasa do(
+			posXCasa = random 1 ((tamanoX/4)-casaXY)
+			createHouse posXCasa posYCasa (tamanoZ+1) casaXY casaXY casaZ
+			posYCasa = posYCasa + (random (casaXY+2) (casaXY+6))
+		)
+		
+		if estaXY > ((tamanoX/4)-2) (
+			estaXY = (tamanoX/4)-2)
+		)
+		posYEstablo = random 1 (tamanoX/10)
+		for i=1 to numEstablo do (
+			posXEstablo= random 1 ((tamanoX/4)-estaXY-1)
+			createHouse posXEstablo posYEstablo (tamanoZ+1) estaXY estaXY estaZ
+			posYEstablo = posYEstablo + (random (estaXY+2) (estaXY+6))
+		)
+		
+		
+		/*if (numCasa * casaXY) > ((tamanoX/4)*3) then (
+			numCasa = (tamanoX / (casaXY+2))
+		)*/
+			--   ---Crear bucle para que se creen varias casas y cambiar aleatoriedad en su posicion de creacion en X e Y
 		--createPyramid typePyramid 0 0 tamanoZ piraXY piraXY
-		createTree 0 0 tamanoZ arbX arbY arbZ
+		--createTree 0 0 tamanoZ arbX arbY arbZ
 		--createPagoda 0 0 tamanoZ pagX pagY pagZ
-		createRuine 0 0 0 5 5 5
+		--createRuine 0 0 0 5 5 5
 )
 
 
@@ -711,7 +739,7 @@ rollout datosPira "Piramides" width:296 height:104
 
 rollout datosEstablo "Establos" width:296 height:104
 (
-	spinner numEstab "Numero de Establos    " pos:[116,17] width:115 scale: 1 type: #integer height:16 enabled:true range:[0,3,numEsta]
+	spinner numEstab "Numero de Establos    " pos:[116,17] width:115 scale: 1 type: #integer height:16 enabled:true range:[0,2,numEsta]
 	spinner tamanoXesta "Tamaño ejeX " pos:[42,55] width:95 height:16 enabled:true scale: 1 type: #integer range:[5,10,estaX]
 	spinner tamanoYesta "Tamaño ejeY    " pos:[190,55] width:93 height:16 enabled:true scale: 1 type: #integer range:[5,10,estaY]
 	spinner tamanoZesta "Tamaño ejeZ    " pos:[116,85] width:93 height:16 enabled:true scale: 1 type: #integer range:[5,10,estaZ]
