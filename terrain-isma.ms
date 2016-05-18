@@ -74,6 +74,7 @@ TexturaPiedraladrillo=sysInfo.currentdir + "\\texture\piedraladrillo\stone.png"
 TexturaPiedramoho=sysInfo.currentdir + "\\texture\piedramoho\moho.png"
 TexturaPiedratrabajada=sysInfo.currentdir + "\\texture\piedratrabajada\stone.png"
 TexturaPiedraarena=sysInfo.currentdir + "\\texture\piedraarena\sandstone.png"
+
 bitmapMarte=bitmaptexture filename: TexturaMarte
 bitmapJupiterArriba=bitmaptexture filename: TexturaJupiterArriba
 bitmapJupiterAbajo=bitmaptexture filename: TexturaJupiterAbajo
@@ -95,7 +96,6 @@ bitmapPiedramoho=bitmaptexture filename: TexturaPiedramoho
 bitmapPiedratrabajada=bitmaptexture filename: TexturaPiedratrabajada
 bitmapPiedraarena=bitmaptexture filename: TexturaPiedraarena
 
-print(TexturaArbolTroncoMarte)
 
 
 p=1
@@ -189,37 +189,23 @@ fn createBox posX posY posZ width lengt height offsetX offsetY offsetZ Tipomater
 	aux = box length:lengt width:width height:height mapcoords:on pos:[centroX-1,centroY-1,posZ-1] material:Tipomaterial
 )
 
-
-
-fn createTree posX posY posZ tamX tamY tamZ = (
-	
-	hojicascont=0
-	aux1=tamX
-	aux2=tamY
-	rand = random (tamZ*1.5) (tamZ*2)
-	rand2 = random 1 2
+fn createRuine posX posY posZ tamX tamY tamZ = (
+	createFill posX posY 0 tamX tamY posZ 
 	
 	for z=1 to tamZ do(
 		for y=1 to tamY do(
 			for x=1 to tamX do(
-				createBox x y z 1 1 1 posX posY posZ matArbolTroncoMarte
-			)
-		)
-	)
-
-	hojicascont=tamZ
-	for z=hojicascont+1 to (rand-1) do(
-		if rand2==1 then(
-			for y=1 to aux2*3 do(
-				for x=1 to aux1*3 do(
-					createBox x y z 1 1 1 (posX-1) (posY-1) posZ matArbolHMarte
-				)
-			)
-		)
-		if rand2==2 then(
-			for y=1 to aux2*5 do(
-				for x=1 to aux1*5 do(
-					createBox x y z 1 1 1 (posX-2) (posY-2) posZ matMarte
+				if z==1 then (
+					createBox x y z 1 1 1 posX posY posZ matPiedramoho
+				)else if(z<tamZ) then (
+					if ((y==1 or y== tamY or x==1 or x==tamX)) and ((z==2 and x==2 and y==1) or (z==2 and x==3 and y==1) or (z==3 and x==2 and y==1) or (z==3 and x==3 and y==1) or (z==4 and x==2 and y==1) or (z==4 and x==3 and y==1))==false then(
+						createBox x y z 1 1 1 posX posY posZ matPiedramoho
+					)
+				)else(
+					rand= random 0 3
+					if(rand==0 and (y==1 or y== tamY or x==1 or x==tamX)) then(
+						createBox x y z 1 1 1 posX posY posZ matPiedramoho
+					)
 				)
 			)
 		)
@@ -227,4 +213,7 @@ fn createTree posX posY posZ tamX tamY tamZ = (
 )
 
 
-createTree 0 0 0 1 1 5
+
+
+
+createRuine 0 0 0 10 10 5

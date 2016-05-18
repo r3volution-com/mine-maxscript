@@ -572,6 +572,29 @@ fn createPagoda posX posY posZ tamX tamY  numPlanta = (
 		)
 )
 
+fn createRuine posX posY posZ tamX tamY tamZ = (
+	createFill posX posY 0 tamX tamY posZ 
+	
+	for z=1 to tamZ do(
+		for y=1 to tamY do(
+			for x=1 to tamX do(
+				if z==1 then (
+					createBox x y z 1 1 1 posX posY posZ matPiedramoho
+				)else if(z<tamZ) then (
+					if ((y==1 or y== tamY or x==1 or x==tamX)) and ((z==2 and x==2 and y==1) or (z==2 and x==3 and y==1) or (z==3 and x==2 and y==1) or (z==3 and x==3 and y==1) or (z==4 and x==2 and y==1) or (z==4 and x==3 and y==1))==false then(
+						createBox x y z 1 1 1 posX posY posZ matPiedramoho
+					)
+				)else(
+					rand= random 0 3
+					if(rand==0 and (y==1 or y== tamY or x==1 or x==tamX)) then(
+						createBox x y z 1 1 1 posX posY posZ matPiedramoho
+					)
+				)
+			)
+		)
+	)
+)
+
 fn createWorld dumm = (
 		createTerrain 0 0 0 tamanoX tamanoY tamanoZ
 		createMountarin 0 tamanoZ 
@@ -579,6 +602,7 @@ fn createWorld dumm = (
 		--createPyramid typePyramid 0 0 tamanoZ piraXY piraXY
 		createTree 0 0 tamanoZ arbX arbY arbZ
 		--createPagoda 0 0 tamanoZ pagX pagY pagZ
+		createRuine 0 0 0 5 5 5
 )
 
 
