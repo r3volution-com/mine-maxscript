@@ -559,10 +559,10 @@ fn createPagoda posX posY posZ tamX tamY  numPlanta = (
 		iniY=1
 		finX=tamX
 		finY=tamY
-		for z=tamZ+1 to tamZ+(tamX/2) do(
+		for z=1 to tamX/2 do(
 			for y=iniY to finY do(
 				for x=iniX to finX do(
-					createBox x y z 1 1 1 posX posY 0 matPiedraarena
+					createBox x y z 1 1 1 posX posY posZ matPiedraarena
 				)
 			)
 			finX=finX-1
