@@ -189,26 +189,23 @@ fn createBox posX posY posZ width lengt height offsetX offsetY offsetZ Tipomater
 	aux = box length:lengt width:width height:height mapcoords:on pos:[centroX-1,centroY-1,posZ-1] material:Tipomaterial
 )
 
-fn createBridge posX posY posZ tamX tamY tamZ = (
-	for y=1 to tamY do(
-		for x=1 to tamX do(
-			createBox x y 1 1 1 1 posX posY posZ matPiedrabruta
+fn createColosseum posX posY posZ centroX centroY radio tamZ = (
+	for z=1 to tamZ do(
+		for y=1 to radio*2 do(
+			for x=1 to radio*2 do(
+				if z==1 then(
+					if(((x-centroX)*(x-centroX))+((y-centroY)*(y-centroY)))<=(radio*radio) then(
+						createBox x y z 1 1 1 posX posY posZ matPiedrabruta
+					)
+				)
+				else(
+					if((((x-centroX)*(x-centroX))+((y-centroY)*(y-centroY)))<=(radio*radio)) and (((((x-centroX)*(x-centroX))+((y-centroY)*(y-centroY)))>=(radio*radio)-((radio*radio)-(z*z*2)))) then(
+						createBox x y z 1 1 1 posX posY posZ matPiedrabruta
+					)
+				)
+			)
 		)
 	)
 )
 
-fn crearLuces longitudPX longitudPY planoZ luces=(
-	 if luces==1 then(
-		luzdia=Omnilight rgb:(color 255 255 255) shadowColor:(color 0 0 0) multiplier:1 contrast:0 softenDiffuseEdge:0 nearAttenStart:0 nearAttenEnd:40 farAttenStart:80 farAttenEnd:200 decayRadius:197.2 atmosOpacity:100 atmosColorAmt:100 shadowMultiplier:1 pos:[-100.6906,80.2064,planoZ+200] 
-		luzdia.baseObject.castShadows=true
-	
-	 )else(
-		luznoche=Omnilight rgb:(color 75 75 75) shadowColor:(color 0 0 0) multiplier:1 contrast:0 softenDiffuseEdge:0 nearAttenStart:0 nearAttenEnd:40 farAttenStart:80 farAttenEnd:200 decayRadius:197.2 atmosOpacity:100 atmosColorAmt:100 shadowMultiplier:1 pos:[-100.6906,80.2064,planoZ+200] 
-		luznoche.castShadows =on
-	 )
-	 
- )
-
-
-
-crearLuces 40 40 10
+createColosseum 0 0 0 10 10 10 5

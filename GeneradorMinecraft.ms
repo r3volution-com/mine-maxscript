@@ -653,14 +653,33 @@ fn createLights longitudPX longitudPY planoZ luces=(
 	 )
 	 
  )
+ 
+ fn createColosseum posX posY posZ centroX centroY radio tamZ = (
+	for z=1 to tamZ do(
+		for y=1 to radio*2 do(
+			for x=1 to radio*2 do(
+				if z==1 then(
+					if(((x-centroX)*(x-centroX))+((y-centroY)*(y-centroY)))<=(radio*radio) then(
+						createBox x y z 1 1 1 posX posY posZ matPiedrabruta
+					)
+				)
+				else(
+					if((((x-centroX)*(x-centroX))+((y-centroY)*(y-centroY)))<=(radio*radio)) and (((((x-centroX)*(x-centroX))+((y-centroY)*(y-centroY)))>=(radio*radio)-((radio*radio)-(z*z*2)))) then(
+						createBox x y z 1 1 1 posX posY posZ matPiedrabruta
+					)
+				)
+			)
+		)
+	)
+)
 
 fn createWorld dumm = (
 		createTerrain 0 0 0 tamanoX tamanoY tamanoZ
 		createMountain 0 (tamanoY-(tamanoY/4)) tamanoZ (tamanoX/4) (tamanoY/4)
 		createMountain ((tamanoX/4)+3) (tamanoY-(tamanoY/4)) tamanoZ (tamanoX/4) (tamanoY/4)
 		
-		if casaXY > ((tamanoX/4)-2) (
-			casaXY = (tamanoX/4)-2)
+		if casaXY > ((tamanoX/4)-2) then(
+			casaXY = (tamanoX/4)-2
 		)
 		posYCasa = random 1 (tamanoX/10)
 		for i=1 to numCasa do(
@@ -669,8 +688,8 @@ fn createWorld dumm = (
 			posYCasa = posYCasa + (random (casaXY+2) (casaXY+6))
 		)
 		
-		if estaXY > ((tamanoX/4)-2) (
-			estaXY = (tamanoX/4)-2)
+		if estaXY > ((tamanoX/4)-2) then(
+			estaXY = (tamanoX/4)-2
 		)
 		posYEstablo = random 1 (tamanoX/10)
 		for i=1 to numEstablo do (
@@ -691,6 +710,7 @@ fn createWorld dumm = (
 		--createRiver 0 0 0 tamanoX tamanoY tamanoZ
 		--createBridge posX posY posZ tamX tamY tamZ
 		--createLights tamanoX tamanoY alturaZ
+		--createColosseum 0 0 0 10 10 10 5
 		
 )
 
