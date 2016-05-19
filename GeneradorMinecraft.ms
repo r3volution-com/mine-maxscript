@@ -655,6 +655,7 @@ fn createLights longitudPX longitudPY planoZ luces=(
  )
  
  fn createColosseum posX posY posZ centroX centroY radio tamZ = (
+	createFill posX posY 0 (radio*2) (radio*2) posZ 
 	for z=1 to tamZ do(
 		for y=1 to radio*2 do(
 			for x=1 to radio*2 do(
@@ -673,6 +674,42 @@ fn createLights longitudPX longitudPY planoZ luces=(
 	)
 )
 
+fn createStable posX posY posZ tamX tamY tamZ= (
+	createFill posX posY 0 tamX tamY posZ 
+    for z=1 to tamZ do(
+        for y=1 to tamY do(
+            for x=1 to tamX do(
+                if (((x==1 and y==1) or (x==1 and y==tamY) or (x==tamX and y==1) or (x==tamX and y==tamY))and z>3 )or z==1 then(
+                    createBox x y z 1 1 1 posX posY posZ matPiedrabruta
+                )
+                else if (x==tamX and (z==2 or z==3)) or  (y==tamY and (z==2 or z==3)) then(
+                    createBox x y z 1 1 1 posX posY posZ matPiedrabruta
+                )
+                if tamX > tamY then(
+                    if (y==1 and (z==2 or z==3)) then(
+                        createBox x y z 1 1 1 posX posY posZ matPiedrabruta
+                    )
+                )else(
+                    if (x==1 and (z==2 or z==3)) then( ---POSIBLE DEJAR HUECO PARA PUERTA EN LUGAR DE PARED ENTERA
+                        createBox x y z 1 1 1 posX posY posZ matPiedrabruta
+                    )
+                )
+            )
+        )
+    )
+    xa = 0
+    for z=tamZ+1 to tamZ*2  do(
+        for y=1 to tamY do(
+            for x=1 to tamX do(
+                if (x >= 1+xa AND x <= tamX-xa) then (
+                    createBox x y z 1 1 1 posX posY posZ matMadera
+                )
+            )
+        )
+        xa = xa +1
+    )
+)
+
 fn createWorld dumm = (
 		createTerrain 0 0 0 tamanoX tamanoY tamanoZ
 		createMountain 0 (tamanoY-(tamanoY/4)) tamanoZ (tamanoX/4) (tamanoY/4)
@@ -688,14 +725,15 @@ fn createWorld dumm = (
 			posYCasa = posYCasa + (random (casaXY+2) (casaXY+6))
 		)
 		
-		if estaXY > ((tamanoX/4)-2) then(
-			estaXY = (tamanoX/4)-2
+		if estaX > ((tamanoX/4)-2) then(
+			estaX = (tamanoX/4)-2
 		)
 		posYEstablo = random 1 (tamanoX/10)
-		for i=1 to numEstablo do (
-			posXEstablo= random 1 ((tamanoX/4)-estaXY-1)
-			createHouse posXEstablo posYEstablo (tamanoZ+1) estaXY estaXY estaZ
-			posYEstablo = posYEstablo + (random (estaXY+2) (estaXY+6))
+		offsetXEstablo = ((tamanoX/4)+4)
+		for i=1 to numEsta do (
+			posXEstablo= random offsetXEstablo (((tamanoX/4)-estaX-1)+offsetXEstablo)
+			createStable posXEstablo posYEstablo (tamanoZ+1) estaX estaY estaZ
+			posYEstablo = posYEstablo + (random (estaY+2) (estaY+6))
 		)
 		
 		
@@ -711,7 +749,7 @@ fn createWorld dumm = (
 		--createBridge posX posY posZ tamX tamY tamZ
 		--createLights tamanoX tamanoY alturaZ
 		--createColosseum 0 0 0 10 10 10 5
-		
+		--createStable 0 0 0 10 10 10
 )
 
 
