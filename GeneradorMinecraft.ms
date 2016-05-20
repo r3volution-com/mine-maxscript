@@ -2,7 +2,7 @@ tipoPlaneta = 1
 tamanoX = 40
 tamanoY = 40
 tamanoZ = 1
-iluminacion = 1
+luces = 1
 numPira = 0
 piraXY = 10
 numCasa = 0
@@ -761,6 +761,22 @@ fn createStable posX posY posZ tamX tamY tamZ= (
     )
 )
 
+---Crear bucle para que se creen varias casas y cambiar aleatoriedad en su posicion de creacion en X e Y
+--createPyramid 2 0 0 0 22 22
+/*for i=1 to 10 do (
+	x = random 5 10
+	y = random 5 10
+	z = random 5 10
+	createTree (i+x) (i+y) 0 1 1 (i+z)
+)*/
+--createPagoda 0 0 0 10 10 3
+--createRuine 0 0 0 5 5 5
+--createRiver 0 0 0 tamanoX tamanoY tamanoZ
+--createBridge posX posY posZ tamX tamY tamZ
+--createLights tamanoX tamanoY alturaZ
+--createColosseum 0 0 0 10 10 10 5
+--createHouse 0 0 0 10 10 5
+
 fn createWorld dumm = (
 		createTerrain 0 0 0 tamanoX tamanoY tamanoZ
 		createMountain 0 (tamanoY-(tamanoY/4)) tamanoZ (tamanoX/4) (tamanoY/4)
@@ -806,8 +822,6 @@ fn createWorld dumm = (
 			posYPira = posYPira + (random (piraXY+2) (piraXY+((tamanoY/4)-piraXY-1)))
 		)
 		
-
-		
 		if tamanoX >= 60 then (
 			if pagX > ((tamanoX/4)-2) then(
 				pagX = (tamanoX/4)-2
@@ -832,8 +846,6 @@ fn createWorld dumm = (
 				createTree posXArbol posYArbol tamanoZ arbX arbY arbZ
 				posYArbol = posYArbol + arbY+1
 			)
-			--pagodas
-			--coliseos
 		) else (
 				if numArb >  ((tamanoY/2)/(arbY+1)) then (
 					numArb = ((tamanoY/2)/(arbY+1))
@@ -841,6 +853,7 @@ fn createWorld dumm = (
 				
 				posYArbol = random (tamanoY/2) ((tamanoY/2)+2)
 				
+				offsetXArbol = ((tamanoX/2)+4)
 				for i=1 to numArb do (
 					posXArbol = random (offsetXArbol+3) (offsetXArbol+(tamanoX/4)-2)
 					createTree posXArbol posYArbol tamanoZ arbX arbY arbZ
@@ -848,21 +861,10 @@ fn createWorld dumm = (
 				)
 		)
 		createLights tamanoX tamanoY 10 luces 
-		createBridge (tamanoX/4) (tamanoY/2) ((tamanoZ*2)) 3 3 1
+		for i=1 to numPuent do (
+			createBridge (tamanoX/4) (((tamanoY/4)*i)+2) ((tamanoZ*2)) 3 3 1
+		)
 		
-		/*if (numCasa * casaXY) > ((tamanoX/4)*3) then (
-			numCasa = (tamanoX / (casaXY+2))
-		)*/
-			--   ---Crear bucle para que se creen varias casas y cambiar aleatoriedad en su posicion de creacion en X e Y
-		--createPyramid typePyramid 0 0 tamanoZ piraXY piraXY
-		--createTree 0 0 tamanoZ arbX arbY arbZ
-		--createPagoda 0 0 tamanoZ pagX pagY pagZ
-		--createRuine 0 0 0 5 5 5
-		--createRiver 0 0 0 tamanoX tamanoY tamanoZ
-		--createBridge posX posY posZ tamX tamY tamZ
-		--createLights tamanoX tamanoY alturaZ
-		--createColosseum 0 0 0 10 10 10 5
-		--createStable 0 0 0 10 10 10
 )
 
 
@@ -908,9 +910,9 @@ rollout datosGlobal "General" width:296 height:104
 	)	
 	on iluminacion  selected i do(
 		if i==1 then(
-			iluminacion = 1
+			luces = 1
 		)else (
-			iluminacion = 2
+			luces = 2
 		)
 	)
 )
@@ -1013,14 +1015,14 @@ rollout datosColiseo "Coliseos" width:296 height:104
 	)
 )
 
-/*rollout datosPuente "Puentes" width:296 height:104
+rollout datosPuente "Puentes" width:296 height:104
 (
 	spinner numPuen "Numero de Puentes   " pos:[116,17] width:115 scale: 1 type: #integer height:16 enabled:true range:[0,2,numPuent]
 
 	on numPuen changed param do(
 		numPuent=numPuen.value		
 	)
-)*/
+)
 
 rollout datosPagoda "Pagodas" width:296 height:104
 (
@@ -1072,12 +1074,8 @@ AddSubRollout minecraft.rollDentro datosPira
 AddSubRollout minecraft.rollDentro datosCasa
 AddSubRollout minecraft.rollDentro datosEstablo
 AddSubRollout minecraft.rollDentro datosColiseo
---AddSubRollout minecraft.rollDentro datosPuente
+AddSubRollout minecraft.rollDentro datosPuente
 AddSubRollout minecraft.rollDentro datosPagoda
 AddSubRollout minecraft.rollDentro datosVegetacion
-
-
-
-
 
 
