@@ -47,12 +47,14 @@ matArbolHojaMarte= multimaterial numsubs: 6
 matArbolHojaJupiter= multimaterial numsubs: 6
 matArbolHojaLuna= multimaterial numsubs: 6
 matMadera= multimaterial numsubs: 6
+matMaderaoscura= multimaterial numsubs: 6
 matNieve= multimaterial numsubs: 6
 matPiedrabruta= multimaterial numsubs: 6
 matPiedraladrillo= multimaterial numsubs: 6
 matPiedramoho= multimaterial numsubs: 6
 matPiedratrabajada= multimaterial numsubs: 6
 matPiedraarena= multimaterial numsubs: 6
+matLadrillo= multimaterial numsubs: 6
 	
 TexturaMarte=sysInfo.currentdir + "\\texture/Marte/sand.png"
 TexturaJupiterArriba=sysInfo.currentdir + "\\texture/Jupiter/top.png"
@@ -68,6 +70,8 @@ TexturaArbolHojaMarte=sysInfo.currentdir + "\\texture/arbol/hoja2.jpg"
 TexturaArbolHojaJupiter=sysInfo.currentdir + "\\texture/arbol/hoja.png"
 TexturaArbolHojaLuna=sysInfo.currentdir + "\\texture/arbol/hoja3.png"
 TexturaMadera=sysInfo.currentdir + "\\texture/madera/madera.png"
+TexturaMaderaoscura=sysInfo.currentdir + "\\texture/madera/maderaoscura.png"
+TexturaLadrillo=sysInfo.currentdir + "\\texture/ladrillo/brick.png"
 TexturaNieve=sysInfo.currentdir + "\\texture/nieve/nieve.gif"
 TexturaPiedrabruta=sysInfo.currentdir + "\\texture/piedrabruta/lado.png"
 TexturaPiedraladrillo=sysInfo.currentdir + "\\texture/piedraladrillo/stone.png"
@@ -89,6 +93,8 @@ bitmapArbolHojaMarte=bitmaptexture filename: TexturaArbolHojaMarte
 bitmapArbolHojaJupiter=bitmaptexture filename: TexturaArbolHojaJupiter
 bitmapArbolHojaLuna=bitmaptexture filename: TexturaArbolHojaLuna
 bitmapMadera=bitmaptexture filename: TexturaMadera
+bitmapMaderaoscura=bitmaptexture filename: TexturaMaderaoscura
+bitmapLadrillo=bitmaptexture filename: TexturaLadrillo
 bitmapNieve=bitmaptexture filename: TexturaNieve
 bitmapPiedrabruta=bitmaptexture filename: TexturaPiedrabruta
 bitmapPiedraladrillo=bitmaptexture filename: TexturaPiedraladrillo
@@ -127,6 +133,12 @@ for p=1 to 6 do(
 			
 		matMadera[p].diffusemap =bitmapMadera
 		matMadera[p].showInViewport=on
+			
+		matMaderaoscura[p].diffusemap =bitmapMaderaoscura
+		matMaderaoscura[p].showInViewport=on
+			
+		matLadrillo[p].diffusemap =bitmapLadrillo
+		matLadrillo[p].showInViewport=on
 			
 		matNieve[p].diffusemap =bitmapNieve
 		matNieve[p].showInViewport=on
@@ -284,14 +296,13 @@ fn createHouse posX posY posZ tamX tamY tamZ = (
 		for y=1 to tamY do(
 			for x=1 to tamX do(
 				if z==1 then (
-					createBox x y z 1 1 1 posX posY posZ matMarte
+					createBox x y z 1 1 1 posX posY posZ matMadera
 				)
 				else if (z>1 and z<tamZ and (y==1 or y== tamY or x==1 or x==tamX)) and ((z==2 and x==2 and y==1) or (z==2 and x==3 and y==1) or (z==3 and x==2 and y==1) or (z==3 and x==3 and y==1) or (z==4 and x==2 and y==1) or (z==4 and x==3 and y==1))==false then(
-					createBox x y z 1 1 1 posX posY posZ matMarte
+					createBox x y z 1 1 1 posX posY posZ matMadera
 				)
 				else if z==tamZ then(
-					createBox x y z 1 1 1 posX posY posZ matMarte
-				)
+					createBox x y z 1 1 1 posX posY posZ matMadera				)
 			)
 		)
 	)
@@ -300,7 +311,7 @@ fn createHouse posX posY posZ tamX tamY tamZ = (
 		for y=1 to tamY do(
 			for x=1 to tamX do(
 				if (x >= 1+xa AND x <= tamX-xa) then (
-					createBox x y z 1 1 1 posX posY posZ matMarte
+					createBox x y z 1 1 1 posX posY posZ matMaderaoscura
 				)
 			)
 		)
