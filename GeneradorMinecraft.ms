@@ -225,35 +225,35 @@ fn createFill posX posY posZ width lengt height = (
 fn createLayer posX posY posZ width lengt layerZ = (
 	for y=1 to lengt do (
 		for x=1 to width do (
-			if layerZ == 1 OR (layerZ > 1 AND terreno[layerZ-1][posY+y][posX+x] == "Box" AND terreno[layerZ][posY+y][posX+x] != "Box" )  then(
+			if layerZ == 1 OR (layerZ > 1 AND terreno[layerZ-1][posY+y][posX+x] == true AND terreno[layerZ][posY+y][posX+x] !=true)  then(
 				if x == 1 or y == 1 or x == width or y == lengt then (
 					ran = random 1 layerZ
 					if ran == 1 then (
 						if(tipoPlaneta == 1) then(
 							createBox x y layerZ 1 1 1 posX posY posZ matMarte
-							terreno[layerZ][posY+y][posX+x] = "Box"
+							terreno[layerZ][posY+y][posX+x] = true
 						)
 						if(tipoPlaneta == 2) then(
 							createBox x y layerZ 1 1 1 posX posY posZ matLuna
-							terreno[layerZ][posY+y][posX+x] = "Box"
+							terreno[layerZ][posY+y][posX+x] = true
 						)
 						if(tipoPlaneta == 3) then(
 							createBox x y layerZ 1 1 1 posX posY posZ matJupiter
-							terreno[layerZ][posY+y][posX+x] = "Box"
+							terreno[layerZ][posY+y][posX+x] = true
 						)						
 					)
 				) else (
 					if(tipoPlaneta == 1) then(
 						createBox x y layerZ 1 1 1 posX posY posZ matMarte
-						terreno[layerZ][posY+y][posX+x] = "Box"
+						terreno[layerZ][posY+y][posX+x] = true
 					)
 					if(tipoPlaneta == 2) then(
 						createBox x y layerZ 1 1 1 posX posY posZ matLuna
-						terreno[layerZ][posY+y][posX+x] = "Box"
+						terreno[layerZ][posY+y][posX+x] = true
 					)
 					if(tipoPlaneta == 3) then(
 						createBox x y layerZ 1 1 1 posX posY posZ matJupiter
-						terreno[layerZ][posY+y][posX+x] = "Box"
+						terreno[layerZ][posY+y][posX+x] = true
 					)
 				)
 			)
@@ -735,9 +735,9 @@ fn createWorld dumm = (
 		)
 		posYCasa = random 1 ((tamanoY/4)-casaXY-1)
 		for i=1 to numCasa do(
-			posXCasa = random 1 ((tamanoX/4)-casaXY)
+			posXCasa = random 1 ((tamanoX/4)-casaXY-2)
 			createHouse posXCasa posYCasa (tamanoZ+1) casaXY casaXY casaZ
-			posYCasa = posYCasa + (random (casaXY+2) (casaXY+6))
+			posYCasa = posYCasa + (random (casaXY+2) (casaXY+((tamanoY/4)-casaXY-1)))
 		)
 		
 		createRiver 0 0 tamanoZ tamanoX tamanoY tamanoZ
@@ -751,9 +751,20 @@ fn createWorld dumm = (
 		posYEstablo = random 1 ((tamanoY/4)-estaY-1)
 		offsetXEstablo = ((tamanoX/4)+4)
 		for i=1 to numEsta do (
-			posXEstablo= random offsetXEstablo (((tamanoX/4)-estaX-1)+offsetXEstablo)
+			posXEstablo= random offsetXEstablo (((tamanoX/4)-estaX)+offsetXEstablo)
 			createStable posXEstablo posYEstablo (tamanoZ+1) estaX estaY estaZ
-			posYEstablo = posYEstablo + (random (estaY+2) (estaY+6))
+			posYEstablo = posYEstablo + (random (estaY+2) (estaY+((tamanoY/4)-estaY-1)))
+		)
+		
+		if tamanoX > 60 then (
+			-reuinas
+			--pagodas
+			--coliseos
+		)
+		
+		posYEstablo = random 1 (tamanoY/3)
+		for i=0 to numPira do (
+			
 		)
 		
 		
@@ -920,9 +931,9 @@ rollout datosColiseo "Coliseos" width:296 height:104
 	)
 )
 
-rollout datosPuente "Rios y Puentes" width:296 height:104
+rollout datosPuente "Puentes" width:296 height:104
 (
-	spinner numPuen "Numero de Puentes por Rio   " pos:[116,17] width:115 scale: 1 type: #integer height:16 enabled:true range:[0,2,numPuent]
+	spinner numPuen "Numero de Puentes   " pos:[116,17] width:115 scale: 1 type: #integer height:16 enabled:true range:[0,2,numPuent]
 
 	on numPuen changed param do(
 		numPuent=numPuen.value		
