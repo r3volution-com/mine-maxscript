@@ -208,6 +208,7 @@ fn createBox posX posY posZ width lengt height offsetX offsetY offsetZ Tipomater
 	centroY = offsetY+posY+(lengt * 0.5)
 	aux= box length:lengt width:width height:height mapcoords:on pos:[centroX-1,centroY-1,offsetZ+posZ-1]  material:Tipomaterial
 )
+
 fn createFill posX posY posZ width lengt height = (
 	for z=1 to height do (
 		for y=1 to lengt do (
@@ -786,22 +787,65 @@ fn createWorld dumm = (
 		posYEstablo = random 1 ((tamanoY/4)-estaY-1)
 		offsetXEstablo = ((tamanoX/4)+4)
 		for i=1 to numEsta do (
-			posXEstablo= random offsetXEstablo (((tamanoX/4)-estaX)+offsetXEstablo)
+			posXEstablo= random offsetXEstablo (((tamanoX/4)-estaX-2)+offsetXEstablo)
 			createStable posXEstablo posYEstablo (tamanoZ+1) estaX estaY estaZ
 			posYEstablo = posYEstablo + (random (estaY+2) (estaY+((tamanoY/4)-estaY-1)))
 		)
 		
-		if tamanoX > 60 then (
-			--reuinas
-			--pagodas
-			--coliseos
+		posYRuina = random ((tamanoY/2)+1) ((tamanoY/2)+5)
+		posXRuina= random ((tamanoX/4)+6) ((tamanoX/4)+8)
+		createRuine posXRuina posYRuina (tamanoZ+1) 5 5 5
+		
+		if piraXY > ((tamanoX/4)-2) then(
+			piraXY = (tamanoX/4)-2
+		)
+		posYPira = random 1 ((tamanoY/4)-piraXY-1)
+		for i=1 to numPira do (
+			posXPira = random ((tamanoX/2)+((tamanoX/4)-3)) (tamanoX-piraXY-1)
+			createPyramid typePyramid posXPira posYPira tamanoZ piraXY piraXY
+			posYPira = posYPira + (random (piraXY+2) (piraXY+((tamanoY/4)-piraXY-1)))
 		)
 		
-		posYPira = random 1 ((tamanoY/3)-piraXY-1)
-		for i=1 to numPira do (
-			posXPira = random ((tamanoX/3)+piraXY) (tamanoX-piraXY)
-			createPyramid typePyramid posXPira posYPira tamanoZ piraXY piraXY
-			posYPira = posYPira + (random (piraXY+2) (piraXY+((tamanoY/3)-piraXY-1)))
+
+		
+		if tamanoX >= 60 then (
+			if pagX > ((tamanoX/4)-2) then(
+				pagX = (tamanoX/4)-2
+			)
+			posYPag = random 1 ((tamanoY/4)-pagY-1)
+			for i=1 to numPag do (
+				posXPag = random ((tamanoX/2)+5) (((tamanoX/4)*3)-pagX)
+				createPagoda posXPag posYPag tamanoZ pagX pagY pagZ
+				posYPag = posYPag + (random (pagY+2) (pagY+((tamanoY/4)-pagY-1)))
+			)
+			
+			if (numColi > 0) then (
+				createColosseum (tamanoX/2) (tamanoY/2) (tamanoZ+1) 10 10 10 5
+			)
+			
+			if numArb >  ((tamanoY/4)/(arbY+1)) then (
+				numArb = ((tamanoY/4)/(arbY+1))
+			)			
+			posYArbol = random (((tamanoY/4)*3)+2) (((tamanoY/4)*3)+8)
+			for i=1 to numArb do (
+				posXArbol = random (((tamanoY/4)*3)+2) (((tamanoY/4)*3)+8)
+				createTree posXArbol posYArbol tamanoZ arbX arbY arbZ
+				posYArbol = posYArbol + arbY+1
+			)
+			--pagodas
+			--coliseos
+		) else (
+				if numArb >  ((tamanoY/2)/(arbY+1)) then (
+					numArb = ((tamanoY/2)/(arbY+1))
+				)			
+				
+				posYArbol = random (tamanoY/2) ((tamanoY/2)+2)
+				
+				for i=1 to numArb do (
+					posXArbol = random (offsetXArbol+3) (offsetXArbol+(tamanoX/4)-2)
+					createTree posXArbol posYArbol tamanoZ arbX arbY arbZ
+					posYArbol = posYArbol + arbY+1
+				)
 		)
 		
 		
