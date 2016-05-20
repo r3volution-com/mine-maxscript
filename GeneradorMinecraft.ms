@@ -609,7 +609,7 @@ fn createRuine posX posY posZ tamX tamY tamZ = (
 )
 
 fn createRiver posX posY posZ tamX tamY tamZ = (
-	--createFill posX posY 0 tamX tamY posZ 
+	createFill  posY 0 tamX tamY posZ 
 	for z=1 to tamZ do(
 		for y=1 to tamY do(
 			for x=((tamX/4)+1) to ((tamX/4)+3) do(
@@ -757,14 +757,16 @@ fn createWorld dumm = (
 		)
 		
 		if tamanoX > 60 then (
-			-reuinas
+			--reuinas
 			--pagodas
 			--coliseos
 		)
 		
-		posYEstablo = random 1 (tamanoY/3)
-		for i=0 to numPira do (
-			
+		posYPira = random 1 ((tamanoY/3)-piraXY-1)
+		for i=1 to numPira do (
+			posXPira = random ((tamanoX/3)+piraXY) (tamanoX-piraXY)
+			createPyramid typePyramid posXPira posYPira tamanoZ piraXY piraXY
+			posYPira = posYPira + (random (piraXY+2) (piraXY+((tamanoY/3)-piraXY-1)))
 		)
 		
 		
