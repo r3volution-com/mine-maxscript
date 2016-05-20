@@ -2,7 +2,7 @@ tipoPlaneta = 1
 tamanoX = 40
 tamanoY = 40
 tamanoZ = 1
-iluminacion = false
+iluminacion = 1
 numPira = 0
 piraXY = 10
 numCasa = 0
@@ -560,13 +560,13 @@ fn createPagoda posX posY posZ tamX tamY  numPlanta = (
 			for y=1 to tamY do(
 				for x=1 to tamX do(
 					if z==1 then (
-						createBox x y z 1 1 1 posX posY posZ matMadera
+						createBox x y z 1 1 1 posX posY posZ matLadrillo
 					)
 					else if z>1 and z<tamZ and (y==1 or y== tamY or x==1 or x==tamX) then(
-						createBox x y z 1 1 1 posX posY posZ matMadera
+						createBox x y z 1 1 1 posX posY posZ matLadrillo
 					)
 					else if z==tamZ then(
-						createBox x y z 1 1 1 posX posY posZ matMarte
+						createBox x y z 1 1 1 posX posY posZ matMadera
 					)
 				)
 			)
@@ -576,10 +576,10 @@ fn createPagoda posX posY posZ tamX tamY  numPlanta = (
 			for y=1 to tamY+4 do(
 				for x=1 to tamX+4 do(
 					if z==tamZ-1 then (
-						createBox x y z 1 1 1 (posX-2) (posY-2) posZ matMadera
+						createBox x y z 1 1 1 (posX-2) (posY-2) posZ matLadrillo
 					)
 					else if z==tamZ and (y<tamY+3 and x<tamX+3 )then(
-						createBox x y z 1 1 1 (posX-1) (posY-1) posZ matMarte
+						createBox x y z 1 1 1 (posX-1) (posY-1) posZ matMadera
 					)
 				)
 			)
@@ -594,7 +594,7 @@ fn createPagoda posX posY posZ tamX tamY  numPlanta = (
 		for z=1 to tamX/2 do(
 			for y=iniY to finY do(
 				for x=iniX to finX do(
-					createBox x y z 1 1 1 posX posY posZ matPiedraarena
+					createBox x y z 1 1 1 posX posY posZ matMadera
 				)
 			)
 			finX=finX-1
@@ -847,7 +847,8 @@ fn createWorld dumm = (
 					posYArbol = posYArbol + arbY+1
 				)
 		)
-		
+		createLights tamanoX tamanoY 10 luces 
+		createBridge (tamanoX/4) (tamanoY/2) ((tamanoZ*2)) 3 3 1
 		
 		/*if (numCasa * casaXY) > ((tamanoX/4)*3) then (
 			numCasa = (tamanoX / (casaXY+2))
@@ -907,9 +908,9 @@ rollout datosGlobal "General" width:296 height:104
 	)	
 	on iluminacion  selected i do(
 		if i==1 then(
-			
-		)else if i==2 then(
-
+			iluminacion = 1
+		)else (
+			iluminacion = 2
 		)
 	)
 )
@@ -1012,18 +1013,18 @@ rollout datosColiseo "Coliseos" width:296 height:104
 	)
 )
 
-rollout datosPuente "Puentes" width:296 height:104
+/*rollout datosPuente "Puentes" width:296 height:104
 (
 	spinner numPuen "Numero de Puentes   " pos:[116,17] width:115 scale: 1 type: #integer height:16 enabled:true range:[0,2,numPuent]
 
 	on numPuen changed param do(
 		numPuent=numPuen.value		
 	)
-)
+)*/
 
 rollout datosPagoda "Pagodas" width:296 height:104
 (
-	spinner numPago "Numero de Pagodas    " pos:[116,17] width:115 scale: 1 type: #integer height:16 enabled:true range:[0,2,numPag]
+	spinner numPago "Numero de Pagodas    " pos:[116,17] width:115 scale: 1 type: #integer height:16 enabled:true range:[0,1,numPag]
 	spinner tamanoXpag "Tamaño ejeX " pos:[42,55] width:95 height:16 enabled:true scale: 1 type: #integer range:[5,10,pagX]
 	spinner tamanoYpag "Tamaño ejeY    " pos:[190,55] width:93 height:16 enabled:true scale: 1 type: #integer range:[5,10,pagY]
 	spinner tamanoZpag "Tamaño en plantas    " pos:[116,85] width:93 height:16 enabled:true scale: 1 type: #integer range:[3,5,pagZ]
@@ -1071,7 +1072,7 @@ AddSubRollout minecraft.rollDentro datosPira
 AddSubRollout minecraft.rollDentro datosCasa
 AddSubRollout minecraft.rollDentro datosEstablo
 AddSubRollout minecraft.rollDentro datosColiseo
-AddSubRollout minecraft.rollDentro datosPuente
+--AddSubRollout minecraft.rollDentro datosPuente
 AddSubRollout minecraft.rollDentro datosPagoda
 AddSubRollout minecraft.rollDentro datosVegetacion
 
