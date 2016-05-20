@@ -598,6 +598,7 @@ fn createRuine posX posY posZ tamX tamY tamZ = (
 )
 
 fn createRiver posX posY posZ tamX tamY tamZ = (
+	createFill posX posY 0 tamX tamY posZ 
 	for y=1 to tamY do(
 		for x=((tamX/4)+1) to ((tamX/4)+3) do(
 		  createBox x y tamZ 1 1 1 posX posY posZ matAgua
@@ -718,17 +719,22 @@ fn createWorld dumm = (
 		if casaXY > ((tamanoX/4)-2) then(
 			casaXY = (tamanoX/4)-2
 		)
-		posYCasa = random 1 (tamanoX/10)
+		posYCasa = random 1 ((tamanoY/4)-casaXY-1)
 		for i=1 to numCasa do(
 			posXCasa = random 1 ((tamanoX/4)-casaXY)
 			createHouse posXCasa posYCasa (tamanoZ+1) casaXY casaXY casaZ
 			posYCasa = posYCasa + (random (casaXY+2) (casaXY+6))
 		)
 		
+		createRiver 0 0 tamanoZ tamanoX tamanoY tamanoZ
+		
 		if estaX > ((tamanoX/4)-2) then(
 			estaX = (tamanoX/4)-2
 		)
-		posYEstablo = random 1 (tamanoX/10)
+		if estaY > ((tamanoY/4)-2) then(
+			estaY = (tamanoY/4)-2
+		)
+		posYEstablo = random 1 ((tamanoY/4)-estaY-1)
 		offsetXEstablo = ((tamanoX/4)+4)
 		for i=1 to numEsta do (
 			posXEstablo= random offsetXEstablo (((tamanoX/4)-estaX-1)+offsetXEstablo)
