@@ -609,12 +609,14 @@ fn createRuine posX posY posZ tamX tamY tamZ = (
 )
 
 fn createRiver posX posY posZ tamX tamY tamZ = (
-	createFill posX posY 0 tamX tamY posZ 
-	for y=1 to tamY do(
-		for x=((tamX/4)+1) to ((tamX/4)+3) do(
-		  createBox x y tamZ 1 1 1 posX posY posZ matAgua
+	--createFill posX posY 0 tamX tamY posZ 
+	for z=1 to tamZ do(
+		for y=1 to tamY do(
+			for x=((tamX/4)+1) to ((tamX/4)+3) do(
+			  createBox x y z 1 1 1 posX posY posZ matAgua
+			)
 		)
-  )
+	)
 	for z=1 to tamZ do(
 		for y=1 to (tamY-(tamY/4)) do(
 			for  x=((tamX/4)-2) to (tamX/4)do(
@@ -645,6 +647,7 @@ fn createRiver posX posY posZ tamX tamY tamZ = (
 			)
 		)
 	)
+	
 )
 fn createBridge posX posY posZ tamX tamY tamZ = (
 	for y=1 to tamY do(
