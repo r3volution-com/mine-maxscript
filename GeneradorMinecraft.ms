@@ -609,7 +609,7 @@ fn createRuine posX posY posZ tamX tamY tamZ = (
 )
 
 fn createRiver posX posY posZ tamX tamY tamZ = (
-	createFill  posY 0 tamX tamY posZ 
+	--createFill posX posY 0 tamX tamY posZ 
 	for z=1 to tamZ do(
 		for y=1 to tamY do(
 			for x=((tamX/4)+1) to ((tamX/4)+3) do(
