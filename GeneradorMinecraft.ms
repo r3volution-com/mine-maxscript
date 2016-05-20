@@ -213,10 +213,28 @@ fn createFill posX posY posZ width lengt height = (
 		for y=1 to lengt do (
 			for x=1 to width do (
 				if z <= tamanoZ and terreno[z][y][x] != "Box" then (
+					if(tipoPlaneta == 1) then(
 					createBox x y z 1 1 1 posX posY posZ matMarte
 					terreno[z][y][x] = "Box"
+					)
+					if(tipoPlaneta == 2) then(
+					createBox x y z 1 1 1 posX posY posZ matLuna
+					terreno[z][y][x] = "Box"
+					)
+					if(tipoPlaneta == 3) then(
+					createBox x y z 1 1 1 posX posY posZ matJupiter
+					terreno[z][y][x] = "Box"
+					)
 				) else (
+					if(tipoPlaneta == 1) then(
 					createBox x y z 1 1 1 posX posY posZ matMarte
+					)
+					if(tipoPlaneta == 2) then(
+					createBox x y z 1 1 1 posX posY posZ matLuna
+					)
+					if(tipoPlaneta == 3) then(
+					createBox x y z 1 1 1 posX posY posZ matJupiter
+					)
 				)
 			)
 		)
@@ -647,8 +665,25 @@ fn createRiver posX posY posZ tamX tamY tamZ = (
 			)
 		)
 	)
-	
+	for z=1 to posZ do(
+		for y=1 to y=(tamY-(tamY/4)) do(
+			for x=((tamX/4)-2) to ((tamX/4)+6) do(
+				if(z>1) then(
+					if(tipoPlaneta == 1) then(
+					createBox x y z 1 1 1 posX posY 0 matMarte
+					)
+					if(tipoPlaneta == 2) then(
+					createBox x y z 1 1 1 posX posY 0 matLuna
+					)
+					if(tipoPlaneta == 3) then(
+					createBox x y z 1 1 1 posX posY 0 matJupiter
+					)
+				)
+			)
+		)
+	)
 )
+
 fn createBridge posX posY posZ tamX tamY tamZ = (
 	for y=1 to tamY do(
 		for x=1 to tamX do(
